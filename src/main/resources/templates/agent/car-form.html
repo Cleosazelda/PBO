@@ -1,0 +1,41 @@
+<!-- templates/agent/car-form.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Form Mobil</title>
+</head>
+<body>
+    <div th:insert="~{shared/fragments/sidebar}"></div>
+
+    <h2 th:text="${car.id != null} ? 'Edit Mobil' : 'Tambah Mobil'"></h2>
+
+    <form th:action="@{${car.id != null} ? '/agent/cars/update' : '/agent/cars/save'}" th:object="${car}" method="post" enctype="multipart/form-data">
+        <label>Plat Nomor:</label>
+        <input type="text" th:field="*{platNomor}" required/>
+        <br/>
+
+        <label>Merek:</label>
+        <input type="text" th:field="*{merek}" required/>
+        <br/>
+
+        <label>Model:</label>
+        <input type="text" th:field="*{model}" required/>
+        <br/>
+
+        <label>Harga Sewa per hari:</label>
+        <input type="number" th:field="*{hargaSewa}" min="0" required/>
+        <br/>
+
+        <label>Status Ketersediaan:</label>
+        <select th:field="*{statusKetersediaan}">
+            <option value="TERSEDIA">TERSEDIA</option>
+            <option value="SEDANG_DISEWAKAN">SEDANG_DISEWAKAN</option>
+            <option value="SEDANG_PERAWATAN">SEDANG_PERAWATAN</option>
+        </select>
+        <br/>
+
+        <!-- Tambah field lain sesuai model seperti warna, transmisi, dll -->
+        <button type="submit">Simpan</button>
+    </form>
+</body>
+</html>

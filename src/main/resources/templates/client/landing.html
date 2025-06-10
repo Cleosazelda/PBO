@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="frontOffice/fragment/head-fragment :: head-fragment('Rentaly')">
+</head>
+
+<body>
+<div id="wrapper">
+    <!-- Preloader -->
+    <div id="de-preloader"></div>
+
+    <!-- Header -->
+    <th:block th:replace="frontOffice/fragment/header :: header"></th:block>
+
+    <!-- Dynamic Section -->
+    <div class="container mt-5 text-center">
+
+        <!-- Jika client login -->
+        <div th:if="${session.clientNik != null}">
+            <h2>Selamat datang, Client!</h2>
+            <p>NIK Anda: <span th:text="${session.clientNik}"></span></p>
+            <div class="btn-group mt-3">
+                <a th:href="@{/client/profile}" class="btn btn-info">Profil Saya</a>
+                <a th:href="@{/client/rentals}" class="btn btn-primary">Riwayat Rental</a>
+                <a th:href="@{/client/cars}" class="btn btn-success">Pilih Mobil</a>
+            </div>
+        </div>
+
+        <!-- Jika agent login -->
+        <div th:if="${session.agentUsername != null}">
+            <h2>Selamat datang, Agent!</h2>
+            <p>Username: <span th:text="${session.agentUsername}"></span></p>
+            <div class="btn-group mt-3">
+                <a th:href="@{/agent/dashboard}" class="btn btn-success">Dashboard</a>
+                <a th:href="@{/agent/cars}" class="btn btn-primary">Kelola Mobil</a>
+                <a th:href="@{/agent/clients}" class="btn btn-info">Kelola Client</a>
+            </div>
+        </div>
+
+        <!-- Logout button jika sudah login -->
+        <div th:if="${session.clientNik != null or session.agentUsername != null}" class="mt-4">
+            <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="no-bottom no-top" id="content">
+        <div id="top"></div>
+        <section id="section-hero" aria-label="section" class="full-height vertical-center" data-bgimage="url(images/background/7.jpg) bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h4><span class="id-color">Rencanakan perjalananmu sekarang</span></h4>
+                        <h1>Jelajahi dunia dengan mobil yang nyaman</h1>
+                        <p class="lead">Mulailah petualangan tak terlupakan dan temukan dunia dalam kenyamanan dan gaya terbaik dengan armada mobil kami yang sangat nyaman.</p>
+                        <a class="btn-main" th:href="@{/client/cars}">Pilih Mobil</a>
+                    </div>
+                    <div class="col-lg-6">
+                        <img th:src="@{/images/misc/car-2.png}" class="img-fluid" alt="Car" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee Section -->
+        <section aria-label="section" class="pt40 pb40 text-light" data-bgcolor="#181818">
+            <div class="wow fadeInRight d-flex">
+                <div class="de-marquee-list">
+                    <div class="d-item">
+                        <span class="d-item-txt">Layanan Sewa Mobil Profesional</span>
+                        <span class="d-item-display"><i class="d-item-dot"></i></span>
+                        <span class="d-item-txt">Kenyamanan Berkendara Terjamin</span>
+                        <span class="d-item-display"><i class="d-item-dot"></i></span>
+                        <span class="d-item-txt">Armada Terawat & Siap Jalan</span>
+                        <span class="d-item-display"><i class="d-item-dot"></i></span>
+                        <span class="d-item-txt">Pesan Mudah, Proses Cepat</span>
+                        <span class="d-item-display"><i class="d-item-dot"></i></span>
+                        <span class="d-item-txt">Solusi Transportasi Terpercaya</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <th:block th:replace="frontOffice/fragment/footer :: footer"></th:block>
+</div>
+
+<!-- Scripts -->
+<th:block th:replace="frontOffice/fragment/script-fragment :: script-fragment"></th:block>
+
+</body>
+</html>

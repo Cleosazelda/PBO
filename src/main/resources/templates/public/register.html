@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="frontOffice/fragment/head-fragment :: head-fragment('Registrasi - Rentaly')">
+</head>
+
+<body>
+<div id="wrapper">
+    <!-- Preloader -->
+    <div id="de-preloader"></div>
+
+    <!-- Header -->
+    <th:block th:replace="frontOffice/fragment/header :: header"></th:block>
+
+    <!-- Register Section -->
+    <section id="section-register" class="full-height vertical-center" data-bgimage="url(/images/background/7.jpg) bottom">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-6">
+                    <div class="card p-4 shadow-lg rounded-4 bg-white">
+                        <h3 class="text-center mb-4">Registrasi Client</h3>
+
+                        <!-- Error message -->
+                        <div th:if="${error}" class="alert alert-danger text-center" th:text="${error}">
+                            Email sudah terdaftar
+                        </div>
+
+                        <!-- Success message -->
+                        <div th:if="${param.register_success}" class="alert alert-success text-center">
+                            Pendaftaran berhasil! Silakan login.
+                        </div>
+
+                        <form th:action="@{/register}" method="post">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">NIK</label>
+                                    <input type="text" name="nik" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">SIM</label>
+                                    <input type="text" name="sim" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Nama Depan</label>
+                                    <input type="text" name="namaDepan" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Nama Belakang</label>
+                                    <input type="text" name="namaBelakang" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Alamat</label>
+                                <input type="text" name="alamat" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Telepon</label>
+                                <input type="text" name="telepon" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Tanggal Lahir</label>
+                                <input type="date" name="tanggalLahir" class="form-control" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Password</label>
+                                <input type="password" name="password" class="form-control" required>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-main">Daftar</button>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-3">
+                            <p>Sudah punya akun? <a th:href="@{/login}" class="text-primary">Login di sini</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <th:block th:replace="frontOffice/fragment/footer :: footer"></th:block>
+</div>
+
+<!-- Scripts -->
+<th:block th:replace="frontOffice/fragment/script-fragment :: script-fragment"></th:block>
+
+</body>
+</html>

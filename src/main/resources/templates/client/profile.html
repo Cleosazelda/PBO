@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profil Client</title>
+</head>
+<body>
+    <h1>Profil Anda</h1>
+    <p>Nama: <span th:text="${client.nama}"></span></p>
+    <p>NIK: <span th:text="${client.nik}"></span></p>
+    <p>Email: <span th:text="${client.email}"></span></p>
+
+    <a th:href="@{/client/rentals}">Lihat Riwayat Sewa</a> |
+    <a th:href="@{/logout}">Logout</a>
+</body>
+</html>

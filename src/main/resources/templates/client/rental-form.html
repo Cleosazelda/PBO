@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Form Penyewaan</title>
+</head>
+<body>
+    <h2>Form Penyewaan Mobil</h2>
+    <form th:action="@{/rental/submit}" method="post">
+        <input type="hidden" name="carId" th:value="${carId}" />
+        <label>Tanggal Mulai: <input type="date" name="tanggalMulai" /></label><br>
+        <label>Tanggal Selesai: <input type="date" name="tanggalSelesai" /></label><br>
+        <label>Metode Pembayaran:
+            <select name="metodePembayaran">
+                <option value="BANK">Bank</option>
+                <option value="QRIS">QRIS</option>
+                <option value="DANA">DANA</option>
+            </select>
+        </label><br>
+        <button type="submit">Bayar & Sewa</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="frontOffice/fragment/head-fragment :: head-fragment('Login - Rentaly')">
+</head>
+
+<body>
+<div id="wrapper">
+    <!-- Preloader -->
+    <div id="de-preloader"></div>
+
+    <!-- Header -->
+    <th:block th:replace="frontOffice/fragment/header :: header"></th:block>
+
+    <!-- Login Section -->
+    <section id="section-login" class="full-height vertical-center" data-bgimage="url(/images/background/7.jpg) bottom">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-5">
+                    <div class="card p-4 shadow-lg rounded-4 bg-white">
+                        <h3 class="text-center mb-4">Login ke Rentaly</h3>
+
+                        <!-- Error Message -->
+                        <div th:if="${error}" class="alert alert-danger text-center" th:text="${error}">Email atau password salah.</div>
+
+                        <!-- Logout Message -->
+                        <div th:if="${param.logout}" class="alert alert-success text-center">Berhasil logout.</div>
+
+                        <!-- Register Success -->
+                        <div th:if="${param.register_success}" class="alert alert-success text-center">Registrasi berhasil. Silakan login.</div>
+
+                        <!-- Login Form -->
+                        <form th:action="@{/manual-login}" method="post">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" name="email" id="email" class="form-control" placeholder="Masukkan email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Kata Sandi</label>
+                                <input type="password" name="password" id="password" class="form-control" placeholder="Masukkan kata sandi" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-main">Login</button>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-3">
+                            <p>Belum punya akun? <a th:href="@{/register}" class="text-primary">Daftar di sini</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <th:block th:replace="frontOffice/fragment/footer :: footer"></th:block>
+</div>
+
+<!-- Scripts -->
+<th:block th:replace="frontOffice/fragment/script-fragment :: script-fragment"></th:block>
+
+</body>
+</html>

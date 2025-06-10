@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Kelola Mobil - Agent</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-menu {
+            background-color: #34495e;
+            padding: 1rem 2rem;
+        }
+        
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            margin-right: 2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: #2c3e50;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-success {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #229954;
+        }
+        
+        .btn-warning {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e67e22;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        th {
+            background-color: #34495e;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .status-available {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-rented {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-maintenance {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Kelola Mobil</h1>
+        <div>
+            <span>Selamat datang, <strong th:text="${agentUsername}">Agent</strong></span>
+            <a href="/logout" style="color: #ecf0f1; margin-left: 1rem;">Logout</a>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="nav-menu">
+        <a href="/agent/dashboard">Dashboard</a>
+        <a href="/agent/cars" class="active">Kelola Mobil</a>
+        <a href="/agent/rentals">Kelola Rental</a>
+        <a href="/agent/clients">Kelola Client</a>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h2>Daftar Mobil</h2>
+            <a href="/agent/cars/add" class="btn btn-primary">+ Tambah Mobil</a>
+        </div>
+        
+        <!-- Flash Messages -->
+        <div th:if="${success}" class="alert alert-success">
+            <span th:text="${success}"></span>
+        </div>
+        
+        <div th:if="${error}" class="alert alert-error">
+            <span th:text="${error}"></span>
+        </div>
+        
+        <!-- Cars Table -->
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Brand</th>
+                        <th>Model</th>
+                        <th>Tahun</th>
+                        <th>Plat Nomor</th>
+                        <th>Harga/Hari</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="car : ${cars}">
+                        <td th:text="${car.id}">1</td>
+                        <td th:text="${car.brand}">Toyota</td>
+                        <td th:text="${car.model}">Avanza</td>
+                        <td th:text="${car.year}">2020</td>
+                        <td th:text="${car.licensePlate}">B 1234 XYZ</td>
+                        <td>Rp <span th:text="${#numbers.formatDecimal(car.pricePerDay, 0, 'COMMA', 0, 'POINT')}">150000</span></td>
+                        <td>
+                            <span th:class="'status-badge status-' + ${#strings.toLowerCase(car.status)}" 
+                                  th:text="${car.status}">AVAILABLE</span>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a th:href="@{/agent/cars/edit/{id}(id=${car.id})}" class="btn btn-warning btn-sm">Edit</a>
+                                <a th:href="@{/agent/cars/delete/{id}(id=${car.id})}" 
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Apakah Anda yakin ingin menghapus mobil ini?')">Hapus</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- Empty State -->
+            <div th:if="${cars == null or cars.empty}" style="text-align: center; padding: 3rem;">
+                <h3>Belum ada mobil yang terdaftar</h3>
+                <p>Klik tombol "Tambah Mobil" untuk menambahkan mobil baru.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

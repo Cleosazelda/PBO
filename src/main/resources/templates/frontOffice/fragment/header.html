@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ... (konten head lainnya) ... -->
+</head>
+<body>
+<header class="transparent header-light scroll-light has-topbar" th:fragment="header">
+    <div id="topbar" class="topbar-dark text-light">
+        <div class="container">
+            <div class="topbar-left xs-hide">
+                <div class="topbar-widget">
+                    <a href="#"><i class="fa fa-phone"></i>+208 333 9296</a>
+                </div>
+                <div class="topbar-widget">
+                    <a href="#"><i class="fa fa-envelope"></i>contact@rentaly.com</a>
+                </div>
+                <div class="topbar-widget">
+                    <a href="#"><i class="fa fa-clock-o"></i>Senin - Jumat 08.00 - 18.00</a>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="social-icons">
+                    <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+                    <a href="#"><i class="fa fa-youtube fa-lg"></i></a>
+                    <a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
+                    <a href="#"><i class="fa fa-instagram fa-lg"></i></a>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="de-flex sm-pt10">
+                    <div class="de-flex-col">
+                        <div class="de-flex-col">
+                            <!-- logo mulai -->
+                            <div id="logo">
+                                <a th:href="@{/}">
+                                    <img class="logo-1" th:src="@{/images/logo-light.png}" alt="" />
+                                    <img class="logo-2" th:src="@{/images/logo.png}" alt="" />
+                                </a>
+                            </div>
+                            <!-- logo selesai -->
+                        </div>
+                    </div>
+                    <div class="de-flex-col header-col-mid">
+                    <ul id="mainmenu" style="display: flex; gap: 20px; align-items: center; list-style: none; padding-left: 0; margin-bottom: 0;">
+                        <li><a class="menu-item" th:href="@{/}">Beranda</a></li>
+                        <li><a class="menu-item" th:href="@{/client/cars}">Mobil</a></li>
+
+                        <!-- Jika belum login -->
+                        <li th:if="${session.clientNik == null and session.clientUsername == null}">
+                            <a class="menu-item" th:href="@{/login}">Login</a>
+                        </li>
+                        <li th:if="${session.clientNik == null and session.clientUsername == null}">
+                            <a class="menu-item" th:href="@{/register}">Register</a>
+                        </li>
+
+                        <!-- Jika sudah login -->
+                         <li th:if="${session.clientNik != null or session.clientUsername != null}">
+                            <a class="menu-item" th:href="@{/client/profile}">Profile</a>
+                        </li>
+                        <li th:if="${session.clientNik != null or session.clientUsername != null}">
+                            <a class="menu-item btn btn-danger text-white" th:href="@{/logout}" style="padding: 8px 12px; border-radius: 4px;">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Sisa konten body HTML Anda di sini -->
+</body>
+</html>

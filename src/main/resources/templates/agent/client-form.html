@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${isEdit ? 'Edit Client' : 'Tambah Client'} + ' - Dashboard Agent'">Tambah Client - Dashboard Agent</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-menu {
+            background-color: #34495e;
+            padding: 1rem 2rem;
+        }
+        
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            margin-right: 2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: #2c3e50;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .back-btn {
+            background-color: #95a5a6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .back-btn:hover {
+            background-color: #7f8c8d;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+        
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        .form-help {
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+        
+        .nik-info {
+            background-color: #e8f4fd;
+            border: 1px solid #b6d7ff;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .nik-info h4 {
+            margin: 0 0 0.5rem 0;
+            color: #2c3e50;
+        }
+        
+        .nik-info p {
+            margin: 0;
+            font-size: 0.875rem;
+            color: #666;
+        }
+        
+        .form-section {
+            border-top: 2px solid #eee;
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .form-section h3 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Dashboard Agent</h1>
+        <div>
+            <span>Selamat datang, <strong th:text="${agentUsername}">Agent</strong></span>
+            <a href="/logout" style="color: #ecf0f1; margin-left: 1rem;">Logout</a>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="nav-menu">
+        <a href="/agent/dashboard">Dashboard</a>
+        <a href="/agent/cars">Kelola Mobil</a>
+        <a href="/agent/rentals">Kelola Rental</a>
+        <a href="/agent/clients" class="active">Kelola Client</a>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Content Header -->
+        <div class="content-header">
+            <h2 th:text="${isEdit ? 'Edit Client' : 'Tambah Client Baru'}">Tambah Client Baru</h2>
+            <a href="/agent/clients" class="back-btn">← Kembali</a>
+        </div>
+        
+        <!-- NIK Information -->
+        <div class="nik-info" th:if="${!isEdit}">
+            <h4>Informasi NIK</h4>
+            <p>NIK (Nomor Induk Kependudukan) adalah identitas unik yang terdiri dari 16 digit angka. Pastikan NIK yang dimasukkan valid dan sesuai dengan KTP client.</p>
+        </div>
+        
+        <!-- Alert Messages -->
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+        
+        <!-- Form -->
+        <div class="form-container">
+            <form th:action="@{/agent/clients/save}" th:object="${client}" method="post">
+                <!-- Personal Information Section -->
+                <div class="form-section">
+                    <h3>Informasi Pribadi</h3>
+                    
+                    <div class="form-group">
+                        <label for="nik" class="form-label">NIK <span class="required">*</span></label>
+                        <input type="text" id="nik" th:field="*{nik}" class="form-control" 
+                               maxlength="16" pattern="[0-9]{16}" required
+                               th:readonly="${isEdit}">
+                        <div class="form-help">Nomor Induk Kependudukan (16 digit)</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nama" class="form-label">Nama Lengkap <span class="required">*</span></label>
+                        <input type="text" id="nama" th:field="*{nama}" class="form-control" required>
+                        <div class="form-help">Sesuai dengan KTP</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tanggalLahir" class="form-label">Tanggal Lahir <span class="required">*</span></label>
+                            <input type="date" id="tanggalLahir" th:field="*{tanggalLahir}" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="jenisKelamin" class="form-label">Jenis Kelamin <span class="required">*</span></label>
+                            <select id="jenisKelamin" th:field="*{jenisKelamin}" class="form-control" required>
+                                <option value="">Pilih Jenis Kelamin</option>
+                                <option value="L">Laki-laki</option>
+                                <option value="P">Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Information Section -->
+                <div class="form-section">
+                    <h3>Informasi Kontak</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email <span class="required">*</span></label>
+                            <input type="email" id="email" th:field="*{email}" class="form-control" required>
+                            <div class="form-help">Alamat email yang valid</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="noTelepon" class="form-label">No. Telepon <span class="required">*</span></label>
+                            <input type="tel" id="noTelepon" th:field="*{noTelepon}" class="form-control" required>
+                            <div class="form-help">Contoh: 08123456789</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="alamat" class="form-label">Alamat Lengkap <span class="required">*</span></label>
+                        <textarea id="alamat" th:field="*{alamat}" class="form-control" rows="3" required></textarea>
+                        <div class="form-help">Alamat sesuai KTP</div>
+                    </div>
+                </div>
+                
+                <!-- Additional Information Section -->
+                <div class="form-section">
+                    <h3>Informasi Tambahan</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pekerjaan" class="form-label">Pekerjaan</label>
+                            <input type="text" id="pekerjaan" th:field="*{pekerjaan}" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="noSim" class="form-label">No. SIM</label>
+                            <input type="text" id="noSim" th:field="*{noSim}" class="form-control">
+                            <div class="form-help">Nomor Surat Izin Mengemudi</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <textarea id="keterangan" th:field="*{keterangan}" class="form-control" rows="3" placeholder="Catatan tambahan tentang client (opsional)"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Button Group -->
+                <div class="btn-group">
+                    <a href="/agent/clients" class="btn btn-secondary">Batal</a>
+                    <button type="submit" class="btn btn-primary" th:text="${isEdit ? 'Update Client' : 'Simpan Client'}">Simpan Client</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // NIK validation
+        document.getElementById('nik').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+            if (value.length > 16) {
+                value = value.substring(0, 16);
+            }
+            e.target.value = value;
+        });
+        
+        // Phone validation
+        document.getElementById('noTelepon').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+            e.target.value = value;
+        });
+        
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const nik = document.getElementById('nik').value;
+            if (nik.length !== 16) {
+                e.preventDefault();
+                alert('NIK harus terdiri dari 16 digit angka');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Riwayat Sewa</title>
+</head>
+<body>
+    <h1>Riwayat Sewa Anda</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Mobil</th>
+                <th>Tanggal Mulai</th>
+                <th>Tanggal Selesai</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="rental : ${rentalList}">
+                <td th:text="${rental.car.nama}">Nama Mobil</td>
+                <td th:text="${rental.startDate}">2024-01-01</td>
+                <td th:text="${rental.endDate}">2024-01-05</td>
+                <td th:text="${rental.status}">Selesai</td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/client/profile}">Kembali ke Profil</a> |
+    <a th:href="@{/logout}">Logout</a>
+</body>
+</html>
