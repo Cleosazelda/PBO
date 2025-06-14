@@ -35,13 +35,13 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
     
     // Method untuk cek konflik rental (mobil sudah disewa pada periode tertentu)
     @Query("SELECT COUNT(r) FROM Rental r WHERE r.car = :car AND " +
-           "r.statusPenyewaan IN ('ACTIVE', 'PENDING') AND " +
-           "((r.tanggalMulai <= :endDate AND r.tanggalSelesai >= :startDate)) AND " +
-           "(:excludeId IS NULL OR r.id != :excludeId)")
+            "r.statusPenyewaan IN ('ACTIVE', 'PENDING') AND " +
+            "((r.tanggalMulai <= :endDate AND r.tanggalSelesai >= :startDate)) AND " +
+            "(:excludeId IS NULL OR r.id != :excludeId)")
     long countConflictingRentals(@Param("car") Car car, 
-                                @Param("startDate") LocalDate startDate, 
-                                @Param("endDate") LocalDate endDate,
-                                @Param("excludeId") Long excludeId);
+                                 @Param("startDate") LocalDate startDate, 
+                                 @Param("endDate") LocalDate endDate,
+                                 @Param("excludeId") Long excludeId);
     
     // Method untuk mencari rental berdasarkan client NIK
     @Query("SELECT r FROM Rental r WHERE r.client.nik = :nik")
@@ -50,4 +50,7 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
     // Method untuk mencari rental berdasarkan car ID
     @Query("SELECT r FROM Rental r WHERE r.car.id = :carId")
     List<Rental> findByCarId(@Param("carId") Long carId);
+
+    // BARU: Method untuk mencari rental yang statusnya ACTIVE dan tanggal selesainya sudah sebelum tanggal tertentu
+    List<Rental> findByStatusPenyewaanAndTanggalSelesaiBefore(RentalStatus status, LocalDate date);
 }

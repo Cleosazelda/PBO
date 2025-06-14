@@ -14,8 +14,8 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String kodeReferensi;
+    // @Column(unique = true, nullable = false)
+    // private String kodeReferensi;
 
     @Column(unique = true, nullable = false)
     private String platNomor;
@@ -40,7 +40,7 @@ public class Car {
     private Integer jumlahKursi;
     private String fiturTambahan;
 
-    private String password;
+    private boolean TERSEDIA = true;
 
 
     private String gambar; // bisa simpan path/file name
@@ -55,8 +55,8 @@ public class Car {
     // Getter dan Setter
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public String getKodeReferensi() { return kodeReferensi; }
-    public void setKodeReferensi(String kodeReferensi) { this.kodeReferensi = kodeReferensi; }
+    // public String getKodeReferensi() { return kodeReferensi; }
+    // public void setKodeReferensi(String kodeReferensi) { this.kodeReferensi = kodeReferensi; }
     public String getPlatNomor() { return platNomor; }
     public void setPlatNomor(String platNomor) { this.platNomor = platNomor; }
     public String getMerek() { return merek; }
@@ -87,8 +87,6 @@ public class Car {
     public void setAgent(Agent agent) { this.agent = agent; }
     public List<Rental> getPenyewaanList() { return penyewaanList; }
     public void setPenyewaanList(List<Rental> penyewaanList) { this.penyewaanList = penyewaanList; }
-    public String getPassword() {return password;}
-    public void setPassword(String password) {this.password = password;}
 
 }
 

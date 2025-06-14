@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Kelola Mobil - Agent</title>
+    <title>Kelola Mobil - Dashboard Agent</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -11,7 +11,7 @@
             padding: 0;
             background-color: #f5f5f5;
         }
-        
+
         .header {
             background-color: #2c3e50;
             color: white;
@@ -20,12 +20,12 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .nav-menu {
             background-color: #34495e;
             padding: 1rem 2rem;
         }
-        
+
         .nav-menu a {
             color: white;
             text-decoration: none;
@@ -34,162 +34,162 @@
             border-radius: 4px;
             transition: background-color 0.3s;
         }
-        
+
         .nav-menu a:hover, .nav-menu a.active {
             background-color: #2c3e50;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 2rem;
         }
-        
-        .page-header {
+
+        .content-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
         }
-        
-        .btn {
-            display: inline-block;
+
+        .add-btn {
+            background-color: #f39c12;
+            color: white;
             padding: 0.75rem 1.5rem;
             text-decoration: none;
             border-radius: 4px;
             font-weight: bold;
-            text-align: center;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        
-        .btn-primary {
-            background-color: #3498db;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: #2980b9;
-        }
-        
-        .btn-success {
-            background-color: #27ae60;
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background-color: #229954;
-        }
-        
-        .btn-warning {
-            background-color: #f39c12;
-            color: white;
-        }
-        
-        .btn-warning:hover {
+
+        .add-btn:hover {
             background-color: #e67e22;
         }
-        
-        .btn-danger {
-            background-color: #e74c3c;
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
-        
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-        }
-        
-        .alert {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 4px;
-        }
-        
-        .alert-success {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-        }
-        
-        .alert-error {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-        }
-        
+
         .data-table {
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             overflow: hidden;
         }
-        
-        table {
+
+        .table {
             width: 100%;
             border-collapse: collapse;
         }
-        
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #ecf0f1;
-        }
-        
-        th {
+
+        .table th {
             background-color: #34495e;
             color: white;
-            font-weight: bold;
+            padding: 1rem;
+            text-align: left;
         }
-        
-        tr:hover {
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table tr:hover {
             background-color: #f8f9fa;
         }
-        
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-edit {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #229954;
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+
         .status-badge {
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.875rem;
-            font-weight: bold;
-            text-transform: uppercase;
+            font-weight: 500;
         }
-        
+
         .status-available {
             background-color: #d4edda;
             color: #155724;
         }
-        
-        .status-rented {
+
+        .status-unavailable {
             background-color: #fff3cd;
             color: #856404;
         }
-        
-        .status-maintenance {
+
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
             background-color: #f8d7da;
             color: #721c24;
+            border: 1px solid #f5c6cb;
         }
-        
-        .actions {
-            display: flex;
-            gap: 0.5rem;
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        img {
+            max-width: 100px;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <div class="header">
-        <h1>Kelola Mobil</h1>
+        <h1>Dashboard Agent</h1>
         <div>
             <span>Selamat datang, <strong th:text="${agentUsername}">Agent</strong></span>
             <a href="/logout" style="color: #ecf0f1; margin-left: 1rem;">Logout</a>
         </div>
     </div>
-    
+
     <!-- Navigation -->
     <div class="nav-menu">
         <a href="/agent/dashboard">Dashboard</a>
@@ -197,33 +197,25 @@
         <a href="/agent/rentals">Kelola Rental</a>
         <a href="/agent/clients">Kelola Client</a>
     </div>
-    
+
     <!-- Main Content -->
     <div class="container">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h2>Daftar Mobil</h2>
-            <a href="/agent/cars/add" class="btn btn-primary">+ Tambah Mobil</a>
+        <div class="content-header">
+            <h2>Kelola Mobil</h2>
+            <a href="/agent/cars/add" class="add-btn">+ Tambah Mobil Baru</a>
         </div>
-        
-        <!-- Flash Messages -->
-        <div th:if="${success}" class="alert alert-success">
-            <span th:text="${success}"></span>
-        </div>
-        
-        <div th:if="${error}" class="alert alert-error">
-            <span th:text="${error}"></span>
-        </div>
-        
-        <!-- Cars Table -->
+
+        <!-- Alerts -->
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+        <!-- Data Table -->
         <div class="data-table">
-            <table>
+            <table class="table" th:if="${!#lists.isEmpty(cars)}">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Brand</th>
-                        <th>Model</th>
-                        <th>Tahun</th>
+                        <th>Gambar</th>
+                        <th>Merek & Model</th>
                         <th>Plat Nomor</th>
                         <th>Harga/Hari</th>
                         <th>Status</th>
@@ -232,32 +224,34 @@
                 </thead>
                 <tbody>
                     <tr th:each="car : ${cars}">
-                        <td th:text="${car.id}">1</td>
-                        <td th:text="${car.brand}">Toyota</td>
-                        <td th:text="${car.model}">Avanza</td>
-                        <td th:text="${car.year}">2020</td>
-                        <td th:text="${car.licensePlate}">B 1234 XYZ</td>
-                        <td>Rp <span th:text="${#numbers.formatDecimal(car.pricePerDay, 0, 'COMMA', 0, 'POINT')}">150000</span></td>
                         <td>
-                            <span th:class="'status-badge status-' + ${#strings.toLowerCase(car.status)}" 
-                                  th:text="${car.status}">AVAILABLE</span>
+                            <img th:if="${car.gambar}" th:src="@{${car.gambar}}" alt="Gambar Mobil">
+                            <span th:unless="${car.gambar}">No Image</span>
+                        </td>
+                        <td th:text="${car.merek + ' ' + car.model}">Toyota Avanza</td>
+                        <td th:text="${car.platNomor}">D 1234 XYZ</td>
+                        <td>Rp <span th:text="${#numbers.formatDecimal(car.hargaSewa, 0, 'COMMA', 0, 'POINT')}"></span></td>
+                        <td>
+                            <span class="status-badge"
+                                  th:classappend="${car.statusKetersediaan == 'TERSEDIA'} ? 'status-available' : 'status-unavailable'"
+                                  th:text="${#strings.replace(car.statusKetersediaan, '_', ' ')}">
+                            </span>
                         </td>
                         <td>
-                            <div class="actions">
-                                <a th:href="@{/agent/cars/edit/{id}(id=${car.id})}" class="btn btn-warning btn-sm">Edit</a>
-                                <a th:href="@{/agent/cars/delete/{id}(id=${car.id})}" 
-                                   class="btn btn-danger btn-sm"
+                            <div class="action-buttons">
+                                <a th:href="@{/agent/cars/edit/{id}(id=${car.id})}" class="btn btn-edit">Edit</a>
+                                <a th:href="@{/agent/cars/delete/{id}(id=${car.id})}" class="btn btn-delete"
                                    onclick="return confirm('Apakah Anda yakin ingin menghapus mobil ini?')">Hapus</a>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            
-            <!-- Empty State -->
-            <div th:if="${cars == null or cars.empty}" style="text-align: center; padding: 3rem;">
-                <h3>Belum ada mobil yang terdaftar</h3>
-                <p>Klik tombol "Tambah Mobil" untuk menambahkan mobil baru.</p>
+
+            <div th:if="${#lists.isEmpty(cars)}" class="empty-state">
+                <h3>Belum Ada Mobil</h3>
+                <p>Silakan tambahkan mobil baru untuk memulai.</p>
+                <a href="/agent/cars/add" class="add-btn">+ Tambah Mobil Pertama</a>
             </div>
         </div>
     </div>

@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Dashboard Agent</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-        body {
+body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
@@ -53,7 +46,7 @@
         }
         
         .add-btn {
-            background-color: #e74c3c;
+            background-color: #f39c12;
             color: white;
             padding: 0.75rem 1.5rem;
             text-decoration: none;
@@ -63,7 +56,7 @@
         }
         
         .add-btn:hover {
-            background-color: #c0392b;
+            background-color: #e67e22;
         }
         
         .data-table {
@@ -137,6 +130,28 @@
             background-color: #c0392b;
         }
         
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-completed {
+            background-color: #cce7ff;
+            color: #004085;
+        }
+        
+        .status-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
         .alert {
             padding: 1rem;
             margin-bottom: 1rem;
@@ -166,98 +181,3 @@
             margin-bottom: 1rem;
             color: #333;
         }
-        
-        .search-box {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-        
-        .search-form {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        
-        .search-input {
-            flex: 1;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        .search-btn {
-            background-color: #3498db;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-        
-        .search-btn:hover {
-            background-color: #2980b9;
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <div class="header">
-        <h1>Dashboard Agent</h1>
-        <div>
-            <span>Selamat datang, <strong th:text="${agentUsername}">Agent</strong></span>
-            <a href="/logout" style="color: #ecf0f1; margin-left: 1rem;">Logout</a>
-        </div>
-    </div>
-    
-    <!-- Navigation -->
-    <div class="nav-menu">
-        <a href="/agent/dashboard" class="active">Dashboard</a>
-        <a href="/agent/cars">Kelola Mobil</a>
-        <a href="/agent/rentals">Kelola Rental</a>
-        <a href="/agent/clients">Kelola Client</a>
-    </div>
-    
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Statistics Cards -->
-        <div class="stats-grid">
-            <div class="stat-card clients">
-                <div class="stat-number" th:text="${totalClients}">0</div>
-                <div class="stat-label">Total Clients</div>
-            </div>
-            
-            <div class="stat-card agents">
-                <div class="stat-number" th:text="${totalAgents}">0</div>
-                <div class="stat-label">Total Agents</div>
-            </div>
-            
-            <div class="stat-card rentals">
-                <div class="stat-number" th:text="${totalRentals}">0</div>
-                <div class="stat-label">Total Rentals</div>
-            </div>
-            
-            <div class="stat-card cars">
-                <div class="stat-number" th:text="${totalCars}">0</div>
-                <div class="stat-label">Total Cars</div>
-            </div>
-        </div>
-        
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-            <h2>Quick Actions</h2>
-            <div class="actions-grid">
-                <a href="/agent/cars/add" class="action-btn cars">+ Tambah Mobil</a>
-                <a href="/agent/rentals/add" class="action-btn rentals">+ Tambah Rental</a>
-                <a href="/agent/clients/add" class="action-btn clients">+ Tambah Client</a>
-                <a href="/agent/rentals" class="action-btn">Lihat Semua Rental</a>
-            </div>
-        </div>
-    </div>
-</body>
-</html>

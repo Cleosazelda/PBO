@@ -33,7 +33,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/login", "/register", "/client/cars", "/css/**", "/js/**", "/images/**", "/public/**", "/create-test-agent").permitAll()
+                .requestMatchers("/", "/login", "/register", "/client/cars", "/css/**", "/js/**", "/static/**", "/images/**", "/public/**", "/create-test-agent").permitAll()
                 .requestMatchers("/agent/**").hasRole("AGENT")
                 .requestMatchers("/client/**").hasRole("CLIENT")
                 .anyRequest().authenticated()

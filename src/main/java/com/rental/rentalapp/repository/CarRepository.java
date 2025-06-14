@@ -1,5 +1,6 @@
 package com.rental.rentalapp.repository;
 
+import com.rental.rentalapp.model.Agent;
 import com.rental.rentalapp.model.Car;
 import com.rental.rentalapp.model.enums.CarStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,9 +9,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
 
 @Repository
-public interface CarRepository extends JpaRepository<Car, Long> {
+// Tambahkan JpaSpecificationExecutor untuk menggunakan filter dinamis
+public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificationExecutor<Car> {
     
     // Method untuk mencari berdasarkan status
     List<Car> findByStatusKetersediaan(CarStatus status);
@@ -28,8 +32,10 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     List<Car> findByMerekContainingIgnoreCase(String merek);
     
     // Method untuk mencari berdasarkan kode referensi
-    Car findByKodeReferensi(String kodeReferensi);
+    // Car findByKodeReferensi(String kodeReferensi);
     
     // Method untuk mencari berdasarkan plat nomor
     Car findByPlatNomor(String platNomor);
+    // Method untuk mencari berdasarkan agent
+    List<Car> findByAgent(Agent agent);
 }

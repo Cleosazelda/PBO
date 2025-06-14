@@ -248,31 +248,24 @@
             <table class="table" th:if="${!#lists.isEmpty(clients)}">
                 <thead>
                     <tr>
-                        <th>NIK</th>
-                        <th>Nama Lengkap</th>
-                        <th>Email</th>
-                        <th>No. Telepon</th>
-                        <th>Alamat</th>
-                        <th>Tanggal Registrasi</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="client : ${clients}">
-                        <td th:text="${client.nik}">1234567890123456</td>
-                        <td th:text="${client.nama}">John Doe</td>
-                        <td th:text="${client.email}">john@example.com</td>
-                        <td th:text="${client.noTelepon}">08123456789</td>
-                        <td th:text="${client.alamat}">Jl. Contoh No. 123</td>
-                        <td th:text="${#temporals.format(client.tanggalRegistrasi, 'dd/MM/yyyy')}">01/01/2024</td>
-                        <td>
-                            <div class="action-buttons">
-                                <a th:href="@{'/agent/clients/view/' + ${client.nik}}" class="btn btn-view">Lihat</a>
-                                <a th:href="@{'/agent/clients/edit/' + ${client.nik}}" class="btn btn-edit">Edit</a>
-                                <a th:href="@{'/agent/clients/delete/' + ${client.nik}}" 
-                                   class="btn btn-delete"
-                                   onclick="return confirm('Apakah Anda yakin ingin menghapus client ini?')">Hapus</a>
-                            </div>
+                         <th>NIK</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Telepon</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="client : ${clients}">
+                <td th:text="${client.nik}">NIK</td>
+                <td th:text="${client.namaDepan + ' ' + client.namaBelakang}">Nama</td>
+                <td th:text="${client.email}">Email</td>
+                <td th:text="${client.telepon}">Telepon</td>
+                <td>
+                    <a th:href="@{/agent/clients/edit/{nik}(nik=${client.nik})}">Edit</a> |
+                    <a th:href="@{/agent/clients/delete/{nik}(nik=${client.nik})}" 
+                       onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                </td>    </div>
                         </td>
                     </tr>
                 </tbody>

@@ -52,7 +52,7 @@ public class RentalController {
         
         model.addAttribute("rental", new Rental());
         model.addAttribute("clients", clientService.getAllClients());
-        model.addAttribute("cars", carService.getAvailableCars());
+        model.addAttribute("cars", carService.getAvailableCars()); // Pastikan ini mengembalikan mobil yang TERSEDIA
         model.addAttribute("paymentMethods", PaymentMethod.values());
         model.addAttribute("rentalStatuses", RentalStatus.values());
         model.addAttribute("agentUsername", authentication.getName());
@@ -71,7 +71,8 @@ public class RentalController {
         if (rentalOpt.isPresent()) {
             model.addAttribute("rental", rentalOpt.get());
             model.addAttribute("clients", clientService.getAllClients());
-            model.addAttribute("cars", carService.getAllCars());
+            // Saat edit, semua mobil bisa ditampilkan, karena mobil yang sedang disewa mungkin sedang diedit.
+            model.addAttribute("cars", carService.getAllCars()); 
             model.addAttribute("paymentMethods", PaymentMethod.values());
             model.addAttribute("rentalStatuses", RentalStatus.values());
             model.addAttribute("agentUsername", authentication.getName());

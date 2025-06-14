@@ -14,17 +14,13 @@
 </style>
 
 <div id="wrapper">
-    <!-- Preloader -->
     <div id="de-preloader"></div>
 
-    <!-- Header -->
     <th:block th:replace="frontOffice/fragment/header :: header"></th:block>
 
-    <!-- Main Content -->
     <div class="no-bottom no-top zebra" id="content">
         <div id="top"></div>
 
-        <!-- Subheader -->
         <section id="subheader" class="jarallax text-light">
             <img th:src="@{/images/background/2.jpg}" class="jarallax-img" alt="">
             <div class="center-y relative text-center">
@@ -39,97 +35,91 @@
             </div>
         </section>
 
-        <!-- Car List Section -->
         <section id="section-cars">
             <div class="container">
 
-                <!-- Filter Form -->
-                <form th:action="@{/voitures/filter}" method="GET">
+                <form th:action="@{/client/cars}" method="GET">
                     <div class="cols">
-                        <!-- Brand Filter -->
                         <div class="item_filter_group">
                             <h4>Merek</h4>
                             <div class="de_form">
-                                <select name="" id="voiture_marque">
-                                    <option value="" disabled selected>Pilih merek</option>
-                                    <option th:value="Toyota">Toyota</option>
-                                    <option th:value="Honda">Honda</option>
-                                    <option th:value="BMW">BMW</option>
-                                    <option th:value="Mercedes-Benz">Mercedes-Benz</option>
-                                    <option th:value="Ford">Ford</option>
-                                    <!-- Tambahkan merek lain sesuai kebutuhan -->
-                                </select>
+                                <select name="merek" id="car_merek">
+                                    <option value="" selected>Pilih merek</option>
+                                    <option value="Toyota" th:selected="${param.merek == 'Toyota'}">Toyota</option>
+                                    <option value="Honda" th:selected="${param.merek == 'Honda'}">Honda</option>
+                                    <option value="BMW" th:selected="${param.merek == 'BMW'}">BMW</option>
+                                    <option value="Mercedes-Benz" th:selected="${param.merek == 'Mercedes-Benz'}">Mercedes-Benz</option>
+                                    <option value="Ford" th:selected="${param.merek == 'Ford'}">Ford</option>
+                                    <option value="Ford" th:selected="${param.merek == 'Porche'}">Ford</option>
+                                    </select>
                             </div>
                         </div>
 
-                        <!-- Fuel Type Filter -->
                         <div class="item_filter_group">
                             <h4>Bahan Bakar</h4>
                             <div class="de_form">
-                                <select name="vehicle_carburant" id="vehicle_carburant">
-                                    <option value="" disabled selected>Pilih bahan bakar</option>
-                                    <option th:value="Essence">Bensin</option>
-                                    <option th:value="Diesel">Solar</option>
-                                    <option th:value="Électrique">Listrik</option>
+                                <select name="jenisBahanBakar" id="car_jenisBahanBakar">
+                                    <option value="" selected>Pilih bahan bakar</option>
+                                    <option th:each="fuelType : ${T(com.rental.rentalapp.model.enums.FuelType).values()}"
+                                            th:value="${fuelType}"
+                                            th:text="${fuelType}"
+                                            th:selected="${param.jenisBahanBakar == fuelType.name()}"></option>
                                 </select>
                             </div>
                         </div>
 
-                        <!-- Transmission Filter -->
                         <div class="item_filter_group">
                             <h4>Transmisi</h4>
                             <div class="de_form">
-                                <select name="vehicle_transmission" id="vehicle_transmission">
-                                    <option value="" disabled selected>Pilih transmisi</option>
-                                    <option th:value="Manuelle">Manual</option>
-                                    <option th:value="Automatique">Otomatis</option>
+                                <select name="jenisTransmisi" id="car_jenisTransmisi">
+                                    <option value="" selected>Pilih transmisi</option>
+                                    <option th:each="transmissionType : ${T(com.rental.rentalapp.model.enums.TransmissionType).values()}"
+                                            th:value="${transmissionType}"
+                                            th:text="${transmissionType}"
+                                            th:selected="${param.jenisTransmisi == transmissionType.name()}"></option>
                                 </select>
                             </div>
                         </div>
 
                         <input class="btn-main" type="submit" value="Filter">
+                        <a th:href="@{/client/cars}" class="btn-main">Reset Filter</a>
                     </div>
                 </form>
 
-                <!-- Car List -->
-                <th:block th:if="${voitures != null and !voitures.empty}">
-                    <th:block th:each="car : ${voitures}">
+                <th:block th:if="${cars != null and !cars.empty}">
+                    <th:block th:each="car : ${cars}">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="de-item-list mb30">
                                     <div class="d-img">
-                                        <img th:src="@{'/images/' + ${car.image}}" class="img-fluid" th:alt="${car.marque + ' ' + car.modele}" />
+                                        <img th:src="@{'/images/' + ${car.gambar}}" class="img-fluid" th:alt="${car.merek + ' ' + car.model}" />
                                     </div>
                                     <div class="d-info">
-                                        <div class="d-text">
-                                            <h4 th:text="${car.marque + ' ' + car.modele}">Nama Mobil</h4>
-                                            <div class="d-atr-group">
-                                                <ul class="d-atr">
-                                                    <li><span>Kursi:</span> <span th:text="${car.nombreDeplaces}">5</span></li>
-                                                    <li><span>Bahan Bakar:</span> <span th:text="${car.typeDeCarburant.displayName}">Bensin</span></li>
-                                                    <li><span>Transmisi:</span> <span th:text="${car.typeDeTransmission.displayName}">Manual</span></li>
-                                                    <li><span>Warna:</span> <span th:text="${car.couleur}">Hitam</span></li>
-                                                    <li><span>Status:</span> <span th:text="${car.status}">AVAILABLE</span></li>
-                                                </ul>
-                                            </div>
+                                        <h4 th:text="${car.merek + ' ' + car.model}">Nama Mobil</h4>
+                                        <div class="d-atr-group">
+                                            <ul class="d-atr">
+                                                <li><span>Kursi:</span> <span th:text="${car.jumlahKursi}">5</span></li>
+                                                <li><span>Bahan Bakar:</span> <span th:text="${car.jenisBahanBakar}">Bensin</span></li>
+                                                <li><span>Transmisi:</span> <span th:text="${car.jenisTransmisi}">Manual</span></li>
+                                                <li><span>Warna:</span> <span th:text="${car.warna}">Hitam</span></li>
+                                                <li><span>Status:</span> <span th:text="${car.statusKetersediaan.displayName}">Tersedia</span></li>
+                                            </ul>
                                         </div>
                                     </div>
                                     <div class="d-price">
                                         <span>Sewa per hari:</span>
-                                        <strong th:text="${'Rp ' + car.prixDeLocation}">Rp 300.000</strong>
+                                        <strong th:text="${'Rp ' + #numbers.formatDecimal(car.hargaSewa, 0, 'POINT', 0, 'COMMA')}">Rp 300.000</strong>
                                         <br/>
 
-                                        <!-- Tombol aksi -->
-                                        <a class="btn-main" th:href="@{'/voitures/' + ${car.id} + '/details'}">Lihat Detail</a>
+                                        <a class="btn-main" th:href="@{'/client/cars/' + ${car.id}}">Lihat Detail</a>
 
                                         <div th:if="${isLoggedIn}">
-                                            <div th:if="${car.status == 'AVAILABLE'}">
+                                            <div th:if="${car.statusKetersediaan == T(com.rental.rentalapp.model.enums.CarStatus).TERSEDIA}">
                                                 <a class="btn-main" th:href="@{'/client/rental/' + ${car.id}}">Sewa Sekarang</a>
                                             </div>
-                                        </div>
-
-                                        <div th:unless="${isLoggedIn}">
-                                            <a class="btn-main" th:href="@{/login}">Login untuk Menyewa</a>
+                                            <div th:unless="${car.statusKetersediaan == T(com.rental.rentalapp.model.enums.CarStatus).TERSEDIA}">
+                                                <a class="btn-main de-btn-dark" href="javascript:void(0);" disabled>Tidak Tersedia</a>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -139,8 +129,7 @@
                     </th:block>
                 </th:block>
 
-                <!-- Jika kosong -->
-                <div th:if="${voitures == null or voitures.empty}">
+                <div th:if="${cars == null or cars.empty}">
                     <p class="text-center">Tidak ada mobil yang tersedia saat ini.</p>
                 </div>
 
@@ -150,11 +139,9 @@
 
     <a href="#" id="back-to-top"></a>
 
-    <!-- Footer -->
     <th:block th:replace="frontOffice/fragment/footer :: footer"></th:block>
 </div>
 
-<!-- Script JS -->
 <th:block th:replace="frontOffice/fragment/script-fragment :: script-fragment"></th:block>
 
 </body>

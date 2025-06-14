@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="frontOffice/fragment/head-fragment :: head-fragment('Detail Mobil')">
+</head>
+
+<body>
+<div id="wrapper">
+    <div id="de-preloader"></div>
+    <th:block th:replace="frontOffice/fragment/header :: header"></th:block>
+    <div class="no-bottom no-top zebra" id="content">
+        <div id="top"></div>
+
+        <section id="subheader" class="jarallax text-light">
+            <img th:src="@{/images/background/2.jpg}" class="jarallax-img" alt="Background Armada Kendaraan">
+            <div class="center-y relative text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h1>Armada Kendaraan</h1>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="section-car-details">
+            <div class="container">
+                <div class="row g-5">
+                    <div class="col-lg-6">
+                        <div id="slider-carousel" class="owl-carousel">
+                            <div class="item">
+                               <img th:src="@{'/images/' + ${car.gambar}}" th:alt="${car.merek + ' ' + car.model}">                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <h3 th:text="${car.merek} + ' ' + ${car.model}">[Merek Mobil] [Model Mobil]</h3>
+                        <p th:text="${car.platNomor}">[Plat Nomor]</p>
+
+                        <div class="spacer-10"></div>
+                        <h4>Spesifikasi</h4>
+                        <div class="de-spec">
+                            <div class="d-row">
+                                <span class="d-title">Tanggal Rilis</span>
+                                <span class="d-value" th:text="${#temporals.format(car.tanggalRilis, 'dd/MM/yyyy')}">DD/MM/YYYY</span>
+                            </div>
+                            <div class="d-row">
+                                <span class="d-title">Jenis Bahan Bakar</span>
+                                <span class="d-value" th:text="${car.jenisBahanBakar.name()}">BENSIN</span>
+                            </div>
+                            <div class="d-row">
+                                <span class="d-title">Jarak Tempuh</span>
+                                <span class="d-value" th:text="${#numbers.formatInteger(car.jarakTempuh, 0, 'POINT')} + ' KM'">0 KM</span>
+                            </div>
+                            <div class="d-row">
+                                <span class="d-title">Transmisi</span>
+                                <span class="d-value" th:text="${car.jenisTransmisi.name()}">MANUAL</span>
+                            </div>
+                            <div class="d-row">
+                                <span class="d-title">Warna</span>
+                                <span class="d-value" th:text="${car.warna}">Hitam</span>
+                            </div>
+                            <div class="d-row">
+                                <span class="d-title">Jumlah Kursi</span>
+                                <span class="d-value" th:text="${car.jumlahKursi}">5</span>
+                            </div>
+                            <div class="d-row" th:if="${car.fiturTambahan != null and !car.fiturTambahan.isEmpty()}">
+                                <span class="d-title">Fitur Tambahan</span>
+                                <span class="d-value" th:text="${car.fiturTambahan}">AC, GPS, dll.</span>
+                            </div>
+                            <div class="d-row">
+                                <span class="d-title">Status Ketersediaan</span>
+                                <span class="d-value" th:text="${car.statusKetersediaan.displayName}">Tersedia</span>
+                            </div>
+                        </div>
+
+                        <div class="spacer-single"></div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="de-price text-center">
+                            Tarif Harian
+                            <h5 th:text="${'Rp ' + #numbers.formatDecimal(car.hargaSewa, 0, 'POINT', 0, 'COMMA')}">Rp 300.000</h5>
+                        </div>
+                        <div class="spacer-30"></div>
+
+                        <div class="d-flex flex-column align-items-center">
+         
+                           <div th:if="${car.statusKetersediaan.name() == T(com.rental.rentalapp.model.enums.CarStatus).TERSEDIA.name()}">
+                                <a class="btn-main btn-fullwidth" th:href="@{'/client/rental/' + ${car.id}}">Sewa Sekarang</a>
+                            </div>
+                            <div th:unless="${car.statusKetersediaan.name() == T(com.rental.rentalapp.model.enums.CarStatus).TERSEDIA.name()}">
+
+                                <a class="btn-main btn-fullwidth de-btn-dark" href="javascript:void(0);" disabled>Tidak Tersedia</a>
+                            </div>
+                        </div>
+
+                        <div class="spacer-30"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <a href="#" id="back-to-top"></a>
+    <th:block th:replace="frontOffice/fragment/footer :: footer"></th:block>
+</div>
+
+<th:block th:replace="frontOffice/fragment/script-fragment :: script-fragment"></th:block>
+
+</body>
+</html>
