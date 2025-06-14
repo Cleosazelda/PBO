@@ -4,6 +4,7 @@
     <title>Kelola Client - Dashboard Agent</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/agent.css">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -229,14 +230,6 @@
         <div class="content-header">
             <h2>Kelola Client</h2>
             <a href="/agent/clients/add" class="add-btn">+ Tambah Client Baru</a>
-        </div>
-        
-        <!-- Search Box -->
-        <div class="search-box">
-            <form class="search-form" th:action="@{/agent/clients}" method="get">
-                <input type="text" name="search" class="search-input" placeholder="Cari berdasarkan nama, NIK, atau email..." th:value="${param.search}">
-                <button type="submit" class="search-btn">Cari</button>
-            </form>
         </div>
         
         <!-- Alert Messages -->

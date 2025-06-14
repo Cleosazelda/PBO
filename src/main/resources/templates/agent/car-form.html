@@ -3,118 +3,108 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{shared/fragments/layout}">
 <head>
-    <title th:text="${isEdit} ? 'Edit Mobil' : 'Tambah Mobil'">Form Mobil</title>
+    <title th:text="${isEdit} ? 'Edit Mobil - Dashboard Agent' : 'Tambah Mobil Baru - Dashboard Agent'">Form Mobil</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/agent.css">
 </head>
 <body>
 <div layout:fragment="content">
-    <section class="content-header">
-        <h1 th:text="${isEdit} ? 'Edit Mobil' : 'Tambah Mobil'">Form Mobil</h1>
-    </section>
+    <div class="container">
+        <div class="content-header">
+            <h2 th:text="${isEdit} ? 'Edit Mobil' : 'Tambah Mobil Baru'">Form Mobil</h2>
+            <a th:href="@{/agent/cars}" class="back-btn">← Kembali ke Daftar Mobil</a>
+        </div>
 
-    <section class="content">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Informasi Mobil</h3>
-            </div>
+        <div class="form-container">
             <form th:action="@{/agent/cars/save}" th:object="${car}" method="post" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{id}" />
 
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="merek">Merek</label>
-                                <input type="text" class="form-control" th:field="*{merek}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="platNomor">Plat Nomor</label>
-                                <input type="text" class="form-control" th:field="*{platNomor}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="hargaSewa">Harga Sewa / Hari</label>
-                                <input type="number" step="1000" class="form-control" th:field="*{hargaSewa}" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Jenis Transmisi</label>
-                                <select class="form-control" th:field="*{jenisTransmisi}">
-                                    <option th:each="t : ${T(com.rental.rentalapp.model.enums.TransmissionType).values()}" 
-                                            th:value="${t}" th:text="${t.name()}"></option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="jarakTempuh">Jarak Tempuh Tertinggi (km/jam)</label>
-                                <input type="number" step="0" class="form-control" th:field="*{jarakTempuh}" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Jumlah Kursi</label>
-                                <input type="number" class="form-control" th:field="*{jumlahKursi}">
-                            </div>
+                <div class="form-row">
+                    <div>
+                        <div class="form-group">
+                            <label for="merek" class="form-label">Merek <span class="required">*</span></label>
+                            <input type="text" class="form-control" th:field="*{merek}" required>
                         </div>
-                        
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="model">Model</label>
-                                <input type="text" class="form-control" th:field="*{model}" required>
-                            </div>
-                            <th:block th:remove="all">
-    <div class="form-group">
-        <label for="kodeReferensi">Kode Referensi Unik</label>
-        <input type="text" class="form-control" th:field="*{kodeReferensi}" required>
-    </div>
-</th:block>
-                             <div class="form-group">
-                                <label for="tanggalRilis">Tanggal Rilis</label>
-                                <input type="date" class="form-control" th:field="*{tanggalRilis}">
-                            </div>
-                            <div class="form-group">
-                                <label>Jenis Bahan Bakar</label>
-                                <select class="form-control" th:field="*{jenisBahanBakar}">
-                                     <option th:each="ft : ${T(com.rental.rentalapp.model.enums.FuelType).values()}" 
-                                             th:value="${ft}" th:text="${ft.name()}"></option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="warna">Warna</label>
-                                <input type="text" class="form-control" th:field="*{warna}">
-                            </div>
+                        <div class="form-group">
+                            <label for="platNomor" class="form-label">Plat Nomor <span class="required">*</span></label>
+                            <input type="text" class="form-control" th:field="*{platNomor}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="hargaSewa" class="form-label">Harga Sewa / Hari <span class="required">*</span></label>
+                            <input type="number" step="1000" class="form-control" th:field="*{hargaSewa}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jenisTransmisi" class="form-label">Jenis Transmisi</label>
+                            <select class="form-control" th:field="*{jenisTransmisi}">
+                                <option th:each="t : ${T(com.rental.rentalapp.model.enums.TransmissionType).values()}"
+                                        th:value="${t}" th:text="${t.name()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jarakTempuh" class="form-label">Jarak Tempuh Tertinggi (km/jam)</label>
+                            <input type="number" step="0" class="form-control" th:field="*{jarakTempuh}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jumlahKursi" class="form-label">Jumlah Kursi</label>
+                            <input type="number" class="form-control" th:field="*{jumlahKursi}">
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                             <div class="form-group">
-                                <label>Status Ketersediaan</label>
-                                <select class="form-control" th:field="*{statusKetersediaan}">
-                                    <option th:each="s : ${T(com.rental.rentalapp.model.enums.CarStatus).values()}" 
-                                            th:value="${s}" th:text="${s.name()}"></option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="fiturTambahan">Fitur Tambahan</label>
-                                <textarea class="form-control" th:field="*{fiturTambahan}" rows="3"></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="imageFile">Gambar Mobil</label>
-                                <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/png, image/jpeg">
-                                
-                                <div th:if="${isEdit and car.gambar != null}" style="margin-top: 10px;">
-                                    <p>Gambar Saat Ini:</p>
-                                    <img th:src="@{${car.gambar}}" alt="Gambar Mobil" style="max-width: 200px; height: auto; border-radius: 5px;" />
-                                </div>
-                                <p class="help-block" th:if="${isEdit}">Kosongkan jika tidak ingin mengubah gambar.</p>
-                            </div>
+                    <div>
+                        <div class="form-group">
+                            <label for="model" class="form-label">Model <span class="required">*</span></label>
+                            <input type="text" class="form-control" th:field="*{model}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggalRilis" class="form-label">Tanggal Rilis</label>
+                            <input type="date" class="form-control" th:field="*{tanggalRilis}">
+                        </div>
+                        <div class="form-group">
+                            <label for="jenisBahanBakar" class="form-label">Jenis Bahan Bakar</label>
+                            <select class="form-control" th:field="*{jenisBahanBakar}">
+                                <option th:each="ft : ${T(com.rental.rentalapp.model.enums.FuelType).values()}"
+                                        th:value="${ft}" th:text="${ft.name()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="warna" class="form-label">Warna</label>
+                            <input type="text" class="form-control" th:field="*{warna}">
                         </div>
                     </div>
                 </div>
 
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a th:href="@{/agent/cars}" class="btn btn-default">Batal</a>
+                <div class="form-group">
+                    <label for="statusKetersediaan" class="form-label">Status Ketersediaan</label>
+                    <select class="form-control" th:field="*{statusKetersediaan}">
+                        <option th:each="s : ${T(com.rental.rentalapp.model.enums.CarStatus).values()}"
+                                th:value="${s}" th:text="${s.name()}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fiturTambahan" class="form-label">Fitur Tambahan</label>
+                    <textarea class="form-control" th:field="*{fiturTambahan}" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="imageFile" class="form-label">Gambar Mobil</label>
+                    <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/png, image/jpeg">
+                    <div th:if="${isEdit and car.gambar != null}" style="margin-top: 10px;">
+                        <p>Gambar Saat Ini:</p>
+                        <img th:src="@{${car.gambar}}" alt="Gambar Mobil"
+                             style="max-width: 200px; height: auto; border-radius: 5px;" />
+                    </div>
+                    <p class="form-help" th:if="${isEdit}">Kosongkan jika tidak ingin mengubah gambar.</p>
+                </div>
+
+                <div class="btn-group">
+                    <a th:href="@{/agent/cars}" class="btn btn-secondary">Batal</a>
+                    <button type="submit" class="btn btn-primary">Simpan Mobil</button>
                 </div>
             </form>
         </div>
-    </section>
+    </div>
 </div>
 </body>
 </html>

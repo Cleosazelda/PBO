@@ -29,7 +29,8 @@
                     <div class="col-lg-6">
                         <div id="slider-carousel" class="owl-carousel">
                             <div class="item">
-                               <img th:src="@{'/images/' + ${car.gambar}}" th:alt="${car.merek + ' ' + car.model}">                            </div>
+                                <img th:src="@{'/images/' + ${car.gambar}}" th:alt="${car.merek + ' ' + car.model}">
+                            </div>
                         </div>
                     </div>
 
@@ -85,12 +86,10 @@
                         <div class="spacer-30"></div>
 
                         <div class="d-flex flex-column align-items-center">
-         
-                           <div th:if="${car.statusKetersediaan.name() == T(com.rental.rentalapp.model.enums.CarStatus).TERSEDIA.name()}">
+                            <div th:if="${car.statusKetersediaan.name() == T(com.rental.rentalapp.model.enums.CarStatus).TERSEDIA.name()}">
                                 <a class="btn-main btn-fullwidth" th:href="@{'/client/rental/' + ${car.id}}">Sewa Sekarang</a>
                             </div>
                             <div th:unless="${car.statusKetersediaan.name() == T(com.rental.rentalapp.model.enums.CarStatus).TERSEDIA.name()}">
-
                                 <a class="btn-main btn-fullwidth de-btn-dark" href="javascript:void(0);" disabled>Tidak Tersedia</a>
                             </div>
                         </div>

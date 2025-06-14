@@ -1,81 +1,103 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{shared/fragments/layout}">
 <head>
-    <title th:text="${isEdit ? 'Edit Rental' : 'Tambah Rental Baru'}"></title>
-    </head>
+    <title th:text="${isEdit ? 'Edit Rental' : 'Tambah Rental Baru'} + ' - Dashboard Agent'"></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/agent.css">
+</head>
 <body>
-    <div class="container">
-        <h2 th:text="${isEdit ? 'Edit Transaksi Rental' : 'Tambah Transaksi Rental Baru'}"></h2>
+<div layout:fragment="content">
+    <div class="form-page-container"> <div class="content-header">
+            <h2 th:text="${isEdit ? 'Edit Transaksi Rental' : 'Tambah Transaksi Rental Baru'}"></h2>
+            <a th:href="@{/agent/rentals}" class="back-btn">← Kembali ke Daftar Rental</a>
+        </div>
 
         <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
         <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
 
-        <form th:action="@{/agent/rentals/save}" th:object="${rental}" method="post">
-            <input type="hidden" th:field="*{id}" th:if="${isEdit}" />
+        <div class="form-container">
+            <form th:action="@{/agent/rentals/save}" th:object="${rental}" method="post">
+                <input type="hidden" th:field="*{id}" th:if="${isEdit}" />
 
-            <div>
-                <label for="client">Client:</label>
-                <select id="client" th:field="*{client.nik}"> <option value="">-- Pilih Client --</option>
-                    <option th:each="client : ${clients}" 
-                            th:value="${client.nik}" 
-                            th:text="${client.namaDepan + ' ' + client.namaBelakang + ' (' + client.nik + ')'}"
-                            th:selected="${rental.client != null and rental.client.nik == client.nik}"> </option>
-                </select>
+                <div class="form-row">
+                    <div>
+                        <div class="form-group">
+                            <label for="client" class="form-label">Client <span class="required">*</span></label>
+                            <select id="client" th:field="*{client.nik}" class="form-control" required>
+                                <option value="">-- Pilih Client --</option>
+                                <option th:each="client : ${clients}"
+                                        th:value="${client.nik}"
+                                        th:text="${client.namaDepan + ' ' + client.namaBelakang + ' (' + client.nik + ')'}"
+                                        th:selected="${rental.client != null and rental.client.nik == client.nik}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="car" class="form-label">Mobil <span class="required">*</span></label>
+                            <select id="car" th:field="*{car.id}" class="form-control" required>
+                                <option value="">-- Pilih Mobil --</option>
+                                <option th:each="car : ${cars}"
+                                        th:value="${car.id}"
+                                        th:text="${car.merek + ' ' + car.model + ' (' + car.platNomor + ')' + (car.statusKetersediaan != null ? ' - ' + car.statusKetersediaan.displayName : '')}"
+                                        th:selected="${rental.car != null and rental.car.id == car.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="biayaSewa" class="form-label">Biaya Sewa <span class="required">*</span></label>
+                            <input type="number" id="biayaSewa" th:field="*{biayaSewa}" step="0.01" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group">
+                            <label for="tanggalMulai" class="form-label">Tanggal Mulai <span class="required">*</span></label>
+                            <input type="date" id="tanggalMulai" th:field="*{tanggalMulai}" class="form-control" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tanggalSelesai" class="form-label">Tanggal Selesai <span class="required">*</span></label>
+                            <input type="date" id="tanggalSelesai" th:field="*{tanggalSelesai}" class="form-control" required />
+                        </div>
+                    </div>
                 </div>
 
-            <div>
-                <label for="car">Mobil:</label>
-                <select id="car" th:field="*{car.id}">
-                    <option value="">-- Pilih Mobil --</option>
-                    <option th:each="car : ${cars}" 
-                            th:value="${car.id}" 
-                            th:text="${car.merek + ' ' + car.model + ' (' + car.platNomor + ')' + (car.statusKetersediaan != null ? ' - ' + car.statusKetersediaan.displayName : '')}"
-                            th:selected="${rental.car != null and rental.car.id == car.id}"> </option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="metodePembayaran" class="form-label">Metode Pembayaran <span class="required">*</span></label>
+                    <select id="metodePembayaran" th:field="*{metodePembayaran}" class="form-control" required>
+                        <option value="">-- Pilih Metode Pembayaran --</option>
+                        <option th:each="method : ${paymentMethods}"
+                                th:value="${method.name()}"
+                                th:text="${method.displayName}"
+                                th:selected="${rental.metodePembayaran != null and rental.metodePembayaran.name() == method.name()}">
+                        </option>
+                    </select>
+                </div>
 
-            <div>
-                <label for="biayaSewa">Biaya Sewa:</label>
-                <input type="number" id="biayaSewa" th:field="*{biayaSewa}" step="0.01" required />
-            </div>
+                <div class="form-group">
+                    <label for="statusPenyewaan" class="form-label">Status Penyewaan <span class="required">*</span></label>
+                    <select id="statusPenyewaan" th:field="*{statusPenyewaan}" class="form-control" required>
+                        <option value="">-- Pilih Status --</option>
+                        <option th:each="status : ${rentalStatuses}"
+                                th:value="${status.name()}"
+                                th:text="${status.displayName}"
+                                th:selected="${rental.statusPenyewaan != null and rental.statusPenyewaan.name() == status.name()}">
+                        </option>
+                    </select>
+                </div>
 
-            <div>
-                <label for="tanggalMulai">Tanggal Mulai:</label>
-                <input type="date" id="tanggalMulai" th:field="*{tanggalMulai}" required />
-            </div>
-
-            <div>
-                <label for="tanggalSelesai">Tanggal Selesai:</label>
-                <input type="date" id="tanggalSelesai" th:field="*{tanggalSelesai}" required />
-            </div>
-
-            <div>
-                <label for="metodePembayaran">Metode Pembayaran:</label>
-                <select id="metodePembayaran" th:field="*{metodePembayaran}">
-                    <option value="">-- Pilih Metode Pembayaran --</option>
-                    <option th:each="method : ${paymentMethods}" 
-                            th:value="${method.name()}" 
-                            th:text="${method.displayName}"
-                            th:selected="${rental.metodePembayaran != null and rental.metodePembayaran.name() == method.name()}">
-                    </option>
-                </select>
-            </div>
-
-            <div>
-                <label for="statusPenyewaan">Status Penyewaan:</label>
-                <select id="statusPenyewaan" th:field="*{statusPenyewaan}">
-                    <option value="">-- Pilih Status --</option>
-                    <option th:each="status : ${rentalStatuses}" 
-                            th:value="${status.name()}" 
-                            th:text="${status.displayName}"
-                            th:selected="${rental.statusPenyewaan != null and rental.statusPenyewaan.name() == status.name()}">
-                    </option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary" th:text="${isEdit ? 'Update Rental' : 'Tambah Rental'}">Tambah Rental</button>
-            <a th:href="@{/agent/rentals}" class="btn btn-secondary">Batal</a>
-        </form>
+                <div class="btn-group">
+                    <a th:href="@{/agent/rentals}" class="btn btn-secondary form-cancel-button">Batal</a>
+                    <button type="submit" class="btn btn-primary form-submit-button" th:text="${isEdit ? 'Update Rental' : 'Tambah Rental'}"></button>
+                </div>
+            </form>
+        </div>
     </div>
-    </body>
+</div>
+</body>
 </html>
