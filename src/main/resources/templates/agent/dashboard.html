@@ -1,266 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{shared/fragments/layout}">
-<head>
-    <title>Dashboard Agent</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <link rel="stylesheet" href="/css/agent.css">
-
-       <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        
-        .header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .nav-menu {
-            background-color: #34495e;
-            padding: 1rem 2rem;
-        }
-        
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            margin-right: 2rem;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        
-        .nav-menu a:hover, .nav-menu a.active {
-            background-color: #2c3e50;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-        
-        .content-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        
-        .add-btn {
-            background-color: #e74c3c;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        
-        .add-btn:hover {
-            background-color: #c0392b;
-        }
-        
-        .data-table {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .table th {
-            background-color: #34495e;
-            color: white;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-        }
-        
-        .table td {
-            padding: 1rem;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .table tr:hover {
-            background-color: #f8f9fa;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .btn {
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 0.875rem;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .btn-view {
-            background-color: #3498db;
-            color: white;
-        }
-        
-        .btn-view:hover {
-            background-color: #2980b9;
-        }
-        
-        .btn-edit {
-            background-color: #27ae60;
-            color: white;
-        }
-        
-        .btn-edit:hover {
-            background-color: #229954;
-        }
-        
-        .btn-delete {
-            background-color: #e74c3c;
-            color: white;
-        }
-        
-        .btn-delete:hover {
-            background-color: #c0392b;
-        }
-        
-        .alert {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 4px;
-            font-weight: 500;
-        }
-        
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: #666;
-        }
-        
-        .empty-state h3 {
-            margin-bottom: 1rem;
-            color: #333;
-        }
-        
-        .search-box {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-        
-        .search-form {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        
-        .search-input {
-            flex: 1;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        .search-btn {
-            background-color: #3498db;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-        
-        .search-btn:hover {
-            background-color: #2980b9;
-        }
-    </style>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backOffice/fragment/head-fragment :: head-fragment('Klien')">
+    <!-- Link ke file CSS kustom Anda untuk tema putih dan cokelat -->
+    <link rel="stylesheet" href="/css/agent.css">
 </head>
-<body>
-    <!-- Header -->
-    <div class="header">
-        <h1>Dashboard Agent</h1>
-        <div>
-            <span>Selamat datang, <strong th:text="${agentUsername}">Agent</strong></span>
-            <a href="/logout" style="color: #ecf0f1; margin-left: 1rem;">Logout</a>
-        </div>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Header dari fragmen backOffice -->
+    <th:block th:replace="backOffice/fragment/header :: header"></th:block>
+
+    <!-- Sidebar dari fragmen backOffice -->
+    <th:block th:replace="backOffice/fragment/aside :: aside"></th:block>
+
+    <!-- Konten Utama Halaman -->
+    <div class="content-wrapper">
+        <!-- Header Konten Halaman (dari backOffice, dijadikan judul utama) -->
+        <section class="content-header">
+            <h1>
+                Manajemen Klien
+                <small>Panel Kontrol</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Beranda</a></li>
+                <li class="active">Klien</li>
+            </ol>
+        </section>
+
+        <!-- Bagian Konten Utama -->
+        <section class="content">
+<!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card clients">
+                    <div class="stat-number" th:text="${totalClients}">0</div>
+                    <div class="stat-label">Total Clients</div>
+                </div>
+
+                <div class="stat-card agents">
+                    <div class="stat-number" th:text="${totalAgents}">0</div>
+                    <div class="stat-label">Total Agents</div>
+                </div>
+
+                <div class="stat-card rentals">
+                    <div class="stat-number" th:text="${totalRentals}">0</div>
+                    <div class="stat-label">Total Rentals</div>
+                </div>
+
+                <div class="stat-card cars">
+                    <div class="stat-number" th:text="${totalCars}">0</div>
+                    <div class="stat-label">Total Cars</div>
+                </div>
+            </div>
+
+        </section>
     </div>
-    
-    <!-- Navigation -->
-    <div class="nav-menu">
-        <a href="/agent/dashboard" class="active">Dashboard</a>
-        <a href="/agent/cars">Kelola Mobil</a>
-        <a href="/agent/rentals">Kelola Rental</a>
-        <a href="/agent/clients">Kelola Client</a>
-    </div>
-    
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Statistics Cards -->
-        <div class="stats-grid">
-            <div class="stat-card clients">
-                <div class="stat-number" th:text="${totalClients}">0</div>
-                <div class="stat-label">Total Clients</div>
-            </div>
-            
-            <div class="stat-card agents">
-                <div class="stat-number" th:text="${totalAgents}">0</div>
-                <div class="stat-label">Total Agents</div>
-            </div>
-            
-            <div class="stat-card rentals">
-                <div class="stat-number" th:text="${totalRentals}">0</div>
-                <div class="stat-label">Total Rentals</div>
-            </div>
-            
-            <div class="stat-card cars">
-                <div class="stat-number" th:text="${totalCars}">0</div>
-                <div class="stat-label">Total Cars</div>
-            </div>
-        </div>
-        
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-            <h2>Quick Actions</h2>
-            <div class="actions-grid">
-                <a href="/agent/cars/add" class="action-btn cars">+ Tambah Mobil</a>
-                <a href="/agent/rentals/add" class="action-btn rentals">+ Tambah Rental</a>
-                <a href="/agent/clients/add" class="action-btn clients">+ Tambah Client</a>
-                <a href="/agent/rentals" class="action-btn">Lihat Semua Rental</a>
-            </div>
-        </div>
-    </div>
+
+    <div class="control-sidebar-bg"></div>
+</div>
+
+<!-- Script fragment dari backOffice -->
+<th:block th:replace="backOffice/fragment/script-fragment :: script-fragment"></th:block>
 </body>
 </html>

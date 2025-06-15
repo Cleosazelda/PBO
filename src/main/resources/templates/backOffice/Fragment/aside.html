@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Judul</title>
+</head>
+<body>
+    <aside th:fragment="aside" class="main-sidebar">
+    <!-- sidebar: gaya dapat ditemukan di sidebar.less -->
+    <section class="sidebar">
+        <!-- menu sidebar: gaya dapat ditemukan di sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">NAVIGASI UTAMA</li>
+            <li>
+                <a th:href="@{/agent/dashboard}"
+                ><i class="fa fa-dashboard"></i> <span>Dasbor</span></a
+                >
+            </li>
+            <li>
+                <a th:href="@{/agent/clients/}"
+                ><i class="fa fa-users"></i> <span>Klien</span></a
+                >
+            </li>
+            <li>
+                <a th:href="@{/agent/cars}"
+                ><i class="fa fa-car"></i> <span>Mobil</span></a
+                >
+            </li>
+            <li>
+                <a th:href="@{/agent/rentals}"
+                ><i class="fa fa-car"></i> <span>Rental</span></a
+                >
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+</body>
+</html>
+
+<!-- 
+    <a href="/agent/cars/add" class="action-btn cars">+ Tambah Mobil</a>
+                <a href="/agent/rentals/add" class="action-btn rentals">+ Tambah Rental</a>
+                <a href="/agent/clients/add" class="action-btn clients">+ Tambah Client</a>
+                <a href="/agent/rentals"  -->

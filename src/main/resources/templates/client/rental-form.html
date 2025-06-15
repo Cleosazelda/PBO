@@ -1,9 +1,409 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Profil Client</title>
-</head>
+<head th:replace="frontOffice/fragment/head-fragment :: head-fragment('Formulir Penyewaan Mobil')">
+    </head>
+
 <body>
-    <h1>Profil Anda</h1>
+<style>
+    /* ------------------------------------- */
+    /* GENERAL FORM STYLING                  */
+    /* ------------------------------------- */
+    .rental-form-section {
+        padding: 60px 0;
+        background-color: #f8f9fa; /* Light background for the section */
+    }
+
+    .rental-card {
+        background-color: #fff;
+        border-radius: 12px; /* Softly rounded corners */
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* Subtle shadow for depth */
+        padding: 40px; /* Ample padding inside the card */
+        margin-bottom: 30px;
+    }
+
+    .rental-card h4 {
+        color: #343a40;
+        margin-bottom: 25px; /* More space below heading */
+        border-bottom: 1px solid #e9ecef; /* Light separator line */
+        padding-bottom: 15px; /* Padding for the separator */
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    /* ------------------------------------- */
+    /* CAR DETAILS IN FORM                   */
+    /* ------------------------------------- */
+    .rental-car-details {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        border-bottom: 1px dashed #e2e6ea; /* Dashed separator */
+        padding-bottom: 25px;
+    }
+
+    .rental-car-details img {
+        width: 150px; /* Larger image in form */
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 25px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .rental-car-info h5 {
+        margin-bottom: 8px;
+        color: #007bff; /* Highlight color for car name */
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .rental-car-info p {
+        margin-bottom: 5px;
+        font-size: 15px;
+        color: #555;
+    }
+
+    .rental-car-info p strong {
+        color: #333;
+    }
+
+    .rental-car-info .price {
+        font-weight: bold;
+        color: #28a745; /* Green for pricing */
+        font-size: 20px;
+        margin-top: 10px;
+        display: block; /* Ensure it takes its own line */
+    }
+
+    /* ------------------------------------- */
+    /* CLIENT DETAILS IN FORM                */
+    /* ------------------------------------- */
+    .rental-client-details {
+        background-color: #f8f9fa; /* Slightly different background for client details */
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+    .rental-client-details p {
+        margin-bottom: 8px;
+        font-size: 15px;
+        color: #555;
+    }
+    .rental-client-details p strong {
+        color: #333;
+        font-weight: 600;
+    }
+    .rental-client-details a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+    .rental-client-details a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+    }
+
+
+    /* ------------------------------------- */
+    /* FORM ELEMENTS                         */
+    /* ------------------------------------- */
+    .form-group {
+        margin-bottom: 25px; /* More space between form fields */
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 10px; /* Space between label and input */
+        font-weight: 600;
+        color: #343a40;
+        font-size: 16px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px; /* Consistent padding with other inputs */
+        border: 1px solid #ced4da;
+        border-radius: 8px; /* Rounded inputs */
+        font-size: 16px;
+        color: #495057;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        outline: none;
+    }
+
+    /* ------------------------------------- */
+    /* TOTAL PRICE & SUBMIT BUTTON           */
+    /* ------------------------------------- */
+    .total-price-box {
+        background-color: #e6f7ff; /* Lighter blue for total price */
+        border: 1px solid #b3e0ff;
+        border-radius: 10px;
+        padding: 30px;
+        text-align: center;
+        margin-top: 40px; /* More space above */
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .total-price-box h4 {
+        margin-bottom: 15px;
+        color: #0056b3;
+        border-bottom: none; /* No border for this heading */
+        padding-bottom: 0;
+    }
+
+    .total-price-box .total-amount {
+        font-size: 38px; /* Very large total price */
+        font-weight: bold;
+        color: #007bff;
+        margin-bottom: 15px;
+    }
+
+    .btn-submit-rental {
+        width: 100%;
+        padding: 18px; /* Larger, more prominent button */
+        font-size: 20px;
+        background-color: #28a745; /* Distinct green for submission */
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        font-weight: 700;
+        margin-top: 30px; /* Space above button */
+    }
+
+    .btn-submit-rental:hover {
+        background-color: #218838;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    /* ------------------------------------- */
+    /* RESPONSIVE ADJUSTMENTS                */
+    /* ------------------------------------- */
+    @media (max-width: 768px) {
+        .rental-form-section {
+            padding: 30px 0;
+        }
+        .rental-card {
+            padding: 20px;
+        }
+        .rental-card h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .rental-car-details {
+            flex-direction: column;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+        }
+        .rental-car-details img {
+            margin-right: 0;
+            margin-bottom: 15px;
+            width: 100px;
+            height: 70px;
+        }
+        .rental-car-info h5 {
+            font-size: 18px;
+        }
+        .rental-car-info .price {
+            font-size: 16px;
+        }
+        .rental-client-details {
+            padding: 15px;
+        }
+        .form-group label {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+        .form-control {
+            font-size: 14px;
+            padding: 10px 12px;
+        }
+        .total-price-box {
+            padding: 20px;
+            margin-top: 25px;
+        }
+        .total-price-box .total-amount {
+            font-size: 28px;
+        }
+        .btn-submit-rental {
+            font-size: 18px;
+            padding: 15px;
+        }
+    }
+</style>
+
+<div id="wrapper">
+    <div id="de-preloader"></div>
+    <th:block th:replace="frontOffice/fragment/header :: header"></th:block>
+
+    <div class="no-bottom no-top zebra" id="content">
+        <div id="top"></div>
+
+        <section id="subheader" class="jarallax text-light">
+            <img th:src="@{/images/background/2.jpg}" class="jarallax-img" alt="Background Formulir Penyewaan">
+            <div class="center-y relative text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h1>Formulir Penyewaan</h1>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="rental-form-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-md-10">
+                        <div class="rental-card">
+                            <h4>Detail Mobil</h4>
+                            <div class="rental-car-details">
+                                <img th:src="@{'/images/' + ${car.gambar}}" th:alt="${car.merek + ' ' + car.model}">
+                                <div class="rental-car-info">
+                                    <h5 th:text="${car.merek + ' ' + car.model}">Mobil Pilihan</h5>
+                                    <p>Plat Nomor: <strong th:text="${car.platNomor}">[Plat Nomor]</strong></p>
+                                    <p>Harga Sewa Harian: <span class="price" th:text="${'Rp ' + #numbers.formatDecimal(car.hargaSewa, 0, 'POINT', 0, 'COMMA')}">Rp 0</span></p>
+                                </div>
+                            </div>
+
+                            <h4>Detail Klien</h4>
+                            <div th:if="${client != null}" class="rental-client-details">
+                                <p>Nama Lengkap: <strong th:text="${client.namaLengkap}">[Nama Klien]</strong></p>
+                                <p>Email: <strong th:text="${client.email}">[email@example.com]</strong></p>
+                                <p>Nomor Telepon: <strong th:text="${client.nomorTelepon}">[+62-xxx-xxxx]</strong></p>
+                                <p>Alamat: <strong th:text="${client.alamat}">[Alamat Klien]</strong></p>
+                            </div>
+                            <div th:unless="${client != null}" class="rental-client-details">
+                                <p>Data klien tidak tersedia. Anda perlu <a th:href="@{/login}">**Login**</a> untuk melanjutkan.</p>
+                            </div>
+
+                            <div class="spacer-30"></div>
+
+                            <h4>Informasi Penyewaan</h4>
+                            <form th:action="@{/client/rental/submit}" method="POST">
+                                <input type="hidden" name="carId" th:value="${car.id}" />
+
+                                <div class="form-group">
+                                    <label for="tanggalMulai">Tanggal Mulai Sewa:</label>
+                                    <input type="date" id="tanggalMulai" name="tanggalMulai" class="form-control" required th:min="${#dates.format(#dates.createToday(), 'yyyy-MM-dd')}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="tanggalSelesai">Tanggal Selesai Sewa:</label>
+                                    <input type="date" id="tanggalSelesai" name="tanggalSelesai" class="form-control" required th:min="${#dates.format(#dates.createToday(), 'yyyy-MM-dd')}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="metodePembayaran">Metode Pembayaran:</label>
+                                    <select id="metodePembayaran" name="metodePembayaran" class="form-control" required>
+                                        <option value="" disabled selected>Pilih metode pembayaran</option>
+                                        <option th:each="method : ${paymentMethods}"
+                                                th:value="${method.name()}"
+                                                th:text="${method.displayName}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="total-price-box">
+                                    <h4>Total Harga (Estimasi)</h4>
+                                    <p class="total-amount" id="estimatedTotalPrice">Rp 0</p>
+                                    <p style="font-size: 13px; color: #777; margin-top: 10px;">*Estimasi harga akan dihitung setelah Anda memilih tanggal sewa.</p>
+                                    <p style="font-size: 12px; color: #777;">**Harga akhir akan dikonfirmasi saat proses pembayaran.</p>
+                                </div>
+
+                                <button type="submit" class="btn-submit-rental">Konfirmasi Penyewaan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <a href="#" id="back-to-top"></a>
+    <th:block th:replace="frontOffice/fragment/footer :: footer"></th:block>
+</div>
+
+<th:block th:replace="frontOffice/fragment/script-fragment :: script-fragment"></th:block>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // Get daily rental price from Thymeleaf variable
+    const dailyRentalPrice = /*[[${car.hargaSewa}]]*/ 0.0;
+    const tanggalMulaiInput = document.getElementById('tanggalMulai');
+    const tanggalSelesaiInput = document.getElementById('tanggalSelesai');
+    const estimatedTotalPriceElement = document.getElementById('estimatedTotalPrice');
+
+    // Function to calculate and update total price
+    function calculateTotalPrice() {
+        const startDateString = tanggalMulaiInput.value;
+        const endDateString = tanggalSelesaiInput.value;
+
+        if (!startDateString || !endDateString) {
+            estimatedTotalPriceElement.textContent = 'Rp 0';
+            return;
+        }
+
+        const startDate = new Date(startDateString);
+        const endDate = new Date(endDateString);
+
+        if (isNaN(startDate) || isNaN(endDate) || startDate > endDate) {
+            estimatedTotalPriceElement.textContent = 'Rp 0';
+            return;
+        }
+
+        // Calculate difference in days, including both start and end day
+        const timeDiff = endDate.getTime() - startDate.getTime();
+        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // +1 to include both start and end day
+
+        let totalPrice = dailyRentalPrice * daysDiff;
+
+        // Format to Indonesian Rupiah
+        estimatedTotalPriceElement.textContent = 'Rp ' + totalPrice.toLocaleString('id-ID', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+    }
+
+    // Set min date for date inputs to today, ensuring future dates only
+    const today = new Date();
+    // Adjust for timezone offset to ensure 'today' is correct regardless of client's timezone
+    const offset = today.getTimezoneOffset() * 60 * 1000;
+    const todayLocal = new Date(today.getTime() - offset);
+    const todayFormatted = todayLocal.toISOString().split('T')[0];
+
+    tanggalMulaiInput.min = todayFormatted;
+    tanggalSelesaiInput.min = todayFormatted;
+
+    // Add event listeners to re-calculate price on date change
+    tanggalMulaiInput.addEventListener('change', calculateTotalPrice);
+    tanggalSelesaiInput.addEventListener('change', calculateTotalPrice);
+
+    // Add event listener to update min date for tanggalSelesai based on tanggalMulai
+    tanggalMulaiInput.addEventListener('change', function() {
+        if (tanggalMulaiInput.value) {
+            tanggalSelesaiInput.min = tanggalMulaiInput.value;
+            // If start date is after current end date, reset end date
+            if (new Date(tanggalMulaiInput.value) > new Date(tanggalSelesaiInput.value)) {
+                tanggalSelesaiInput.value = tanggalMulaiInput.value;
+                calculateTotalPrice(); // Recalculate if end date changes
+            }
+        }
+    });
+
+    // Initial calculation if dates are pre-filled (unlikely for new form)
+    calculateTotalPrice();
+    /*]]>*/
+</script>
+
 </body>
 </html>

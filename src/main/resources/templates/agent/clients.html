@@ -1,274 +1,124 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Kelola Client - Dashboard Agent</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head th:replace="backOffice/fragment/head-fragment :: head-fragment('Klien')">
+    <!-- Link ke file CSS kustom Anda untuk tema putih dan cokelat -->
     <link rel="stylesheet" href="/css/agent.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        
-        .header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .nav-menu {
-            background-color: #34495e;
-            padding: 1rem 2rem;
-        }
-        
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            margin-right: 2rem;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        
-        .nav-menu a:hover, .nav-menu a.active {
-            background-color: #2c3e50;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-        
-        .content-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        
-        .add-btn {
-            background-color: #e74c3c;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        
-        .add-btn:hover {
-            background-color: #c0392b;
-        }
-        
-        .data-table {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .table th {
-            background-color: #34495e;
-            color: white;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-        }
-        
-        .table td {
-            padding: 1rem;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .table tr:hover {
-            background-color: #f8f9fa;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .btn {
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 0.875rem;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .btn-view {
-            background-color: #3498db;
-            color: white;
-        }
-        
-        .btn-view:hover {
-            background-color: #2980b9;
-        }
-        
-        .btn-edit {
-            background-color: #27ae60;
-            color: white;
-        }
-        
-        .btn-edit:hover {
-            background-color: #229954;
-        }
-        
-        .btn-delete {
-            background-color: #e74c3c;
-            color: white;
-        }
-        
-        .btn-delete:hover {
-            background-color: #c0392b;
-        }
-        
-        .alert {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 4px;
-            font-weight: 500;
-        }
-        
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: #666;
-        }
-        
-        .empty-state h3 {
-            margin-bottom: 1rem;
-            color: #333;
-        }
-        
-        .search-box {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-        
-        .search-form {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        
-        .search-input {
-            flex: 1;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        .search-btn {
-            background-color: #3498db;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-        
-        .search-btn:hover {
-            background-color: #2980b9;
-        }
-    </style>
 </head>
-<body>
-    <!-- Header -->
-    <div class="header">
-        <h1>Dashboard Agent</h1>
-        <div>
-            <span>Selamat datang, <strong th:text="${agentUsername}">Agent</strong></span>
-            <a href="/logout" style="color: #ecf0f1; margin-left: 1rem;">Logout</a>
-        </div>
-    </div>
-    
-    <!-- Navigation -->
-    <div class="nav-menu">
-        <a href="/agent/dashboard">Dashboard</a>
-        <a href="/agent/cars">Kelola Mobil</a>
-        <a href="/agent/rentals">Kelola Rental</a>
-        <a href="/agent/clients" class="active">Kelola Client</a>
-    </div>
-    
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Content Header -->
-        <div class="content-header">
-            <h2>Kelola Client</h2>
-            <a href="/agent/clients/add" class="add-btn">+ Tambah Client Baru</a>
-        </div>
-        
-        <!-- Alert Messages -->
-        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
-        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
-        
-        <!-- Data Table -->
-        <div class="data-table">
-            <table class="table" th:if="${!#lists.isEmpty(clients)}">
-                <thead>
-                    <tr>
-                         <th>NIK</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Telepon</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="client : ${clients}">
-                <td th:text="${client.nik}">NIK</td>
-                <td th:text="${client.namaDepan + ' ' + client.namaBelakang}">Nama</td>
-                <td th:text="${client.email}">Email</td>
-                <td th:text="${client.telepon}">Telepon</td>
-                <td>
-                    <a th:href="@{/agent/clients/edit/{nik}(nik=${client.nik})}">Edit</a> |
-                    <a th:href="@{/agent/clients/delete/{nik}(nik=${client.nik})}" 
-                       onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                </td>    </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <div th:if="${#lists.isEmpty(clients)}" class="empty-state">
-                <h3>Belum Ada Data Client</h3>
-                <p>Silakan tambahkan client baru untuk memulai.</p>
-                <a href="/agent/clients/add" class="add-btn">+ Tambah Client Pertama</a>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Header dari fragmen backOffice -->
+    <th:block th:replace="backOffice/fragment/header :: header"></th:block>
+
+    <!-- Sidebar dari fragmen backOffice -->
+    <th:block th:replace="backOffice/fragment/aside :: aside"></th:block>
+
+    <!-- Konten Utama Halaman -->
+    <div class="content-wrapper">
+        <!-- Header Konten Halaman (dari backOffice, dijadikan judul utama) -->
+        <section class="content-header">
+            <h1>
+                Manajemen Klien
+                <small>Panel Kontrol</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Beranda</a></li>
+                <li class="active">Klien</li>
+            </ol>
+        </section>
+
+        <!-- Bagian Konten Utama -->
+        <section class="content">
+
+            <!-- Pesan Alert (Sukses/Error) -->
+            <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+            <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+            <!-- Area Menu Aksi: "Muat Ulang" dan "Tambah Klien" -->
+            <!-- Menggunakan struktur .box dari backOffice untuk tampilan yang konsisten -->
+            <div class="box">
+                <div class="box-body" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <h3 class="box-title" style="margin:0; color: var(--text-dark);">Opsi Klien</h3>
+                    <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                        <a href="/agent/clients" class="btn-app action-refresh">
+                            <i class="fa fa-repeat"></i> Muat Ulang
+                        </a>
+                        <a href="/agent/clients/add" class="btn-app action-add">
+                            <i class="fa fa-plus"></i> Tambah Klien
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <!-- Tabel Data Klien -->
+            <!-- Menggunakan struktur .box dari backOffice untuk mengelompokkan tabel -->
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Daftar Klien Terdaftar</h3>
+                </div>
+                <div class="box-body">
+                    <div class="data-table">
+                        <table id="example1" class="table">
+                            <thead>
+                            <tr><th>NIK</th>
+                                <th>Nama</th>
+                                <th>Alamat</th>
+                                <th>Email</th>
+                                <th>Telepon</th>
+                                <th>Tanggal Lahir</th>
+                                <th>SIM</th>
+                                <th>Tanggal Registrasi</th>
+                                <th>Aksi</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Loop melalui daftar klien -->
+                            <th:block th:each="client : ${clients}">
+                                <tr>
+                                    <td th:text="${client.nik}">3271011234567890</td>
+                                    <td th:text="${client.namaDepan + ' ' + client.namaBelakang}">Andi Sutrisno</td>
+                                    <td th:text="${client.alamat}">Jl. Merdeka No. 10, Bandung</td>
+                                    <td th:text="${client.email}">andi.sutrisno@email.com</td>
+                                    <td th:text="${client.telepon}">+62 812-3456-7890</td>
+                                    <td th:text="${client.tanggalLahir}">1995-03-20</td>
+                                    <td th:text="${client.sim}">SIM A 1234567</td>
+                                    <td th:text="${client.tanggalPendaftaran}">2024-01-10</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <!-- Tombol Aksi "Ubah" -->
+                                            <a th:href="@{/agent/clients/edit/{nik}(nik=${client.nik})}" class="btn-edit">Ubah</a>
+                                            <!-- Form untuk tombol Aksi "Hapus" -->
+                                            <form th:action="@{/agent/clients/delete/{nik}(nik=${client.nik})}" method="post" style="display:inline-block;">
+                                                <input type="submit" class="btn-delete" value="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus klien ini?');">
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>NIK</th>
+                                <th>Nama</th>
+                                <th>Alamat</th>
+                                <th>Email</th>
+                                <th>Telepon</th>
+                                <th>Tanggal Lahir</th>
+                                <th>SIM</th>
+                                <th>Tanggal Registrasi</th>
+                                <th>Aksi</th>                            
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+
+        </section>
     </div>
+
+    <div class="control-sidebar-bg"></div>
+</div>
+
+<!-- Script fragment dari backOffice -->
+<th:block th:replace="backOffice/fragment/script-fragment :: script-fragment"></th:block>
 </body>
+</html>

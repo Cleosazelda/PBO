@@ -1,21 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{shared/fragments/layout}">
-<head>
-    <title th:text="${isEdit} ? 'Edit Mobil - Dashboard Agent' : 'Tambah Mobil Baru - Dashboard Agent'">Form Mobil</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backOffice/fragment/head-fragment :: head-fragment('Klien')">
+    <!-- Link ke file CSS kustom Anda untuk tema putih dan cokelat -->
     <link rel="stylesheet" href="/css/agent.css">
 </head>
-<body>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Header dari fragmen backOffice -->
+    <th:block th:replace="backOffice/fragment/header :: header"></th:block>
+
+    <!-- Sidebar dari fragmen backOffice -->
+    <th:block th:replace="backOffice/fragment/aside :: aside"></th:block>
+
+    <!-- Konten Utama Halaman -->
+    <div class="content-wrapper">
+    
+    <!-- Main Content -->
+    <div class="container">
 <div layout:fragment="content">
     <div class="container">
         <div class="content-header">
             <h2 th:text="${isEdit} ? 'Edit Mobil' : 'Tambah Mobil Baru'">Form Mobil</h2>
-            <a th:href="@{/agent/cars}" class="back-btn">← Kembali ke Daftar Mobil</a>
-        </div>
-
         <div class="form-container">
             <form th:action="@{/agent/cars/save}" th:object="${car}" method="post" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{id}" />
@@ -102,9 +107,18 @@
                     <a th:href="@{/agent/cars}" class="btn btn-secondary">Batal</a>
                     <button type="submit" class="btn btn-primary">Simpan Mobil</button>
                 </div>
+                </div>
             </form>
         </div>
     </div>
 </div>
+</section>
+    </div>
+
+    <div class="control-sidebar-bg"></div>
+</div>
+
+<!-- Script fragment dari backOffice -->
+<th:block th:replace="backOffice/fragment/script-fragment :: script-fragment"></th:block>
 </body>
 </html>

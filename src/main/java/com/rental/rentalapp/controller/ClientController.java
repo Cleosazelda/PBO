@@ -1,7 +1,10 @@
 package com.rental.rentalapp.controller;
 
+import com.rental.rentalapp.model.Rental; // Tambahkan import ini
 import com.rental.rentalapp.model.Client;
 import com.rental.rentalapp.model.Car;
+import com.rental.rentalapp.model.enums.CarStatus; // Tambahkan import ini
+import com.rental.rentalapp.model.enums.RentalStatus; 
 import com.rental.rentalapp.service.ClientService;
 import com.rental.rentalapp.service.RentalService;
 import com.rental.rentalapp.service.CarService;
@@ -14,6 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping; // Tambahkan import ini
+import org.springframework.web.bind.annotation.RequestParam; // Tambahkan import ini
+import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.Optional;

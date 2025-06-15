@@ -1,19 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{shared/fragments/layout}">
-<head>
-    <title th:text="${isEdit ? 'Edit Rental' : 'Tambah Rental Baru'} + ' - Dashboard Agent'"></title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backOffice/fragment/head-fragment :: head-fragment('Klien')">
+    <!-- Link ke file CSS kustom Anda untuk tema putih dan cokelat -->
     <link rel="stylesheet" href="/css/agent.css">
 </head>
-<body>
-<div layout:fragment="content">
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Header dari fragmen backOffice -->
+    <th:block th:replace="backOffice/fragment/header :: header"></th:block>
+
+    <!-- Sidebar dari fragmen backOffice -->
+    <th:block th:replace="backOffice/fragment/aside :: aside"></th:block>
+
+    <!-- Konten Utama Halaman -->
+    <div class="content-wrapper">
+        <!-- Header Konten Halaman (dari backOffice, dijadikan judul utama) -->
+
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Beranda</a></li>
+                <li class="active">Rental</li>
+            </ol>
+        </section>
+
+        <!-- Bagian Konten Utama -->
+        <section class="content">
+
     <div class="form-page-container"> <div class="content-header">
             <h2 th:text="${isEdit ? 'Edit Transaksi Rental' : 'Tambah Transaksi Rental Baru'}"></h2>
-            <a th:href="@{/agent/rentals}" class="back-btn">← Kembali ke Daftar Rental</a>
-        </div>
+
 
         <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
         <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
@@ -99,5 +113,12 @@
         </div>
     </div>
 </div>
+    </div>
+        </div>
+    <div class="control-sidebar-bg"></div>
+</div>
+
+<!-- Script fragment dari backOffice -->
+<th:block th:replace="backOffice/fragment/script-fragment :: script-fragment"></th:block>
 </body>
 </html>

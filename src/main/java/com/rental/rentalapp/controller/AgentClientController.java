@@ -19,7 +19,7 @@ public class AgentClientController {
     }
 
     // Tampilkan semua client
-    @GetMapping
+    @GetMapping("/")
     public String listClients(Model model) {
         model.addAttribute("clients", clientService.getAllClients());
         return "agent/clients"; // Mengarah ke templates/agent/clients.html
