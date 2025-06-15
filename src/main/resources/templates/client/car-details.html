@@ -87,7 +87,9 @@
 
                         <div class="d-flex flex-column align-items-center">
                             <div th:if="${car.statusKetersediaan.name() == T(com.rental.rentalapp.model.enums.CarStatus).TERSEDIA.name()}">
-                                <a class="btn-main btn-fullwidth" th:href="@{'/client/rental/' + ${car.id}}">Sewa Sekarang</a>
+                                <div class="d-flex justify-content-center mt-4">
+  <a th:href="@{/client/rental/{id}(id=${car.id})}" class="btn btn-primary btn-lg">Sewa Sekarang</a>
+                        </div>
                             </div>
                             <div th:unless="${car.statusKetersediaan.name() == T(com.rental.rentalapp.model.enums.CarStatus).TERSEDIA.name()}">
                                 <a class="btn-main btn-fullwidth de-btn-dark" href="javascript:void(0);" disabled>Tidak Tersedia</a>

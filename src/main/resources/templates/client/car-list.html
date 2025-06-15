@@ -111,16 +111,7 @@
                                         <strong th:text="${'Rp ' + #numbers.formatDecimal(car.hargaSewa, 0, 'POINT', 0, 'COMMA')}">Rp 300.000</strong>
                                         <br/>
 
-                                        <a class="btn-main" th:href="@{'/client/cars/' + ${car.id}}">Lihat Detail</a>
-
-                                        <div th:if="${isLoggedIn}">
-                                            <div th:if="${car.statusKetersediaan == T(com.rental.rentalapp.model.enums.CarStatus).TERSEDIA}">
-                                                <a class="btn-main" th:href="@{'/client/rental/' + ${car.id}}">Sewa Sekarang</a>
-                                            </div>
-                                            <div th:unless="${car.statusKetersediaan == T(com.rental.rentalapp.model.enums.CarStatus).TERSEDIA}">
-                                                <a class="btn-main de-btn-dark" href="javascript:void(0);" disabled>Tidak Tersedia</a>
-                                            </div>
-                                        </div>
+                                        <a class="btn-main" th:href="@{'/client/cars/' + ${car.id}}">Lihat Detail</a>                      </div>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>

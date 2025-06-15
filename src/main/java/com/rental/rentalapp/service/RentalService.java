@@ -90,14 +90,14 @@ public class RentalService {
         // Set status default penyewaan jika baru
         if (rental.getId() == null && rental.getStatusPenyewaan() == null) {
              // Secara default, jika rental baru, set ke PENDING atau ACTIVE sesuai kebijakan
-            rental.setStatusPenyewaan(RentalStatus.PENDING); // Lebih aman dimulai dari PENDING
+            rental.setStatusPenyewaan(RentalStatus.ACTIVE); // Lebih aman dimulai dari PENDING
         } else if (rental.getStatusPenyewaan() == null) {
              // Jika ada update tapi statusnya null, pertahankan status sebelumnya atau set default
             rental.setStatusPenyewaan(RentalStatus.ACTIVE); // Misalnya default ke ACTIVE
         }
 
         // Validasi ketersediaan mobil hanya jika rental berstatus ACTIVE atau PENDING
-        if (rental.getStatusPenyewaan() == RentalStatus.ACTIVE || rental.getStatusPenyewaan() == RentalStatus.PENDING) {
+        if (rental.getStatusPenyewaan() == RentalStatus.ACTIVE) {
             if (!isCarAvailable(managedCar, rental.getTanggalMulai(), rental.getTanggalSelesai(), rental.getId())) {
                 throw new IllegalArgumentException("Mobil " + managedCar.getMerek() + " " + managedCar.getModel() + " tidak tersedia pada periode tanggal tersebut.");
             }

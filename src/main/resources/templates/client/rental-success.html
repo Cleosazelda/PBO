@@ -1,11 +1,109 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Sukses Penyewaan</title>
-</head>
+<head th:replace="frontOffice/fragment/head-fragment :: head-fragment('Rentaly')">
+    <style>
+        .success-container {
+            text-align: center;
+            padding: 50px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 50px auto;
+        }
+        .success-container h3 {
+            color: #28a745; /* Warna hijau untuk sukses */
+            margin-bottom: 20px;
+        }
+        .success-container p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 25px;
+        }
+        .success-container .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .success-container .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
+        .success-container .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .success-container .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            border: 1px solid #6c757d;
+        }
+        .success-container .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+    </head>
+
 <body>
-    <h2>Penyewaan Berhasil!</h2>
-    <p>Terima kasih telah menggunakan layanan kami.</p>
-    <a th:href="@{/cars}">Kembali ke Daftar Mobil</a>
+<div id="wrapper">
+    <!-- Preloader -->
+    <div id="de-preloader"></div>
+
+    <!-- Header -->
+    <th:block th:replace="frontOffice/fragment/header :: header"></th:block>
+
+    <!-- Dynamic Section -->
+    <div class="container mt-5 text-center">
+    <title th:text="${title}"></title>
+<div layout:fragment="content">
+    <section id="subheader" class="dark no-top no-bottom" data-bgimage="url(/images/background/bg-header.html)">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="subheader-c1" style="text-align: center;">
+                        <h2 th:text="${title}">Rental Confirmation</h2>
+                        <ul class="breadcrumbs" style="list-style: none; padding: 0; display: inline-block;">
+                            <li style="display: inline; margin-right: 5px;"><a href="/" style="color: blue;">Home</a></li>
+                            <li style="display: inline; margin-right: 5px;">/</li>
+                            <li style="display: inline; color: #555;">Rental Success</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section aria-label="section" style="padding: 30px 0;">
+        <div class="container" style="max-width: 960px; margin: auto;">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="success-container">
+                        <h3 class="mb-4">Permintaan penyewaan Anda telah berhasil dikirim!</h3>
+                        <p class="lead" th:text="${successMessage}" style="font-size: 1.1em; color: #555; margin-bottom: 25px;"></p>
+                        <p style="font-size: 1.0em; color: #777;">Kami akan meninjau permintaan Anda dan akan menghubungi Anda segera.</p>
+
+                        <div class="d-flex justify-content-center mt-4" style="margin-top: 20px;">
+                            <a th:href="@{/client/landing}" class="btn btn-primary" style="display: inline-block; padding: 10px 20px; margin: 10px; border-radius: 5px; text-decoration: none; font-weight: bold; background-color: #007bff; color: white; border: 1px solid #007bff;">Kembali ke Beranda</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<th:block th:replace="frontOffice/fragment/script-fragment :: script-fragment"></th:block>
+
+
+    <!-- Footer -->
+    <th:block th:replace="frontOffice/fragment/footer :: footer"></th:block>
+</div>
+
+<!-- Scripts -->
+<th:block th:replace="frontOffice/fragment/script-fragment :: script-fragment"></th:block>
+
 </body>
 </html>

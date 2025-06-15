@@ -1,63 +1,309 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="backOffice/fragment/head-fragment :: head-fragment('Klien')">
-    <!-- Link ke file CSS kustom Anda untuk tema putih dan cokelat -->
-    <link rel="stylesheet" href="/css/agent.css">
+<head th:replace="backOffice/fragment/head-fragment :: head-fragment('Dashboard Agen')">
+    <title>Dashboard Agen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin-dashboard.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <!-- Header dari fragmen backOffice -->
     <th:block th:replace="backOffice/fragment/header :: header"></th:block>
 
-    <!-- Sidebar dari fragmen backOffice -->
     <th:block th:replace="backOffice/fragment/aside :: aside"></th:block>
 
-    <!-- Konten Utama Halaman -->
     <div class="content-wrapper">
-        <!-- Header Konten Halaman (dari backOffice, dijadikan judul utama) -->
         <section class="content-header">
             <h1>
-                Manajemen Klien
-                <small>Panel Kontrol</small>
+                Dasbor Agen
+                <small>Selamat Datang, <span th:text="${agentUsername}">Agent</span>!</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Beranda</a></li>
-                <li class="active">Klien</li>
+                <li><a href="#"><i class="fa fa-home"></i> Beranda</a></li>
+                <li class="active">Dasbor</li>
             </ol>
         </section>
 
-        <!-- Bagian Konten Utama -->
         <section class="content">
-<!-- Statistics Cards -->
-            <div class="stats-grid">
-                <div class="stat-card clients">
-                    <div class="stat-number" th:text="${totalClients}">0</div>
-                    <div class="stat-label">Total Clients</div>
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-info-gradient" data-total-clients th:data-total-clients="${totalClients}">
+                        <div class="inner">
+                            <h3 th:text="${totalClients}">0</h3>
+                            <p>Total Klien</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">
+                            Detail Klien <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
                 </div>
-
-                <div class="stat-card agents">
-                    <div class="stat-number" th:text="${totalAgents}">0</div>
-                    <div class="stat-label">Total Agents</div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-success-gradient" data-total-agents th:data-total-agents="${totalAgents}">
+                        <div class="inner">
+                            <h3 th:text="${totalAgents}">0</h3>
+                            <p>Total Agen</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-user-tie"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">
+                            Detail Agen <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
                 </div>
-
-                <div class="stat-card rentals">
-                    <div class="stat-number" th:text="${totalRentals}">0</div>
-                    <div class="stat-label">Total Rentals</div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-warning-gradient" data-total-rentals th:data-total-rentals="${totalRentals}">
+                        <div class="inner">
+                            <h3 th:text="${totalRentals}">0</h3>
+                            <p>Total Rental</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-calendar-check"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">
+                            Detail Rental <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
                 </div>
-
-                <div class="stat-card cars">
-                    <div class="stat-number" th:text="${totalCars}">0</div>
-                    <div class="stat-label">Total Cars</div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-danger-gradient" data-total-cars th:data-total-cars="${totalCars}">
+                        <div class="inner">
+                            <h3 th:text="${totalCars}">0</h3>
+                            <p>Total Mobil</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-car"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">
+                            Detail Mobil <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><i class="fa fa-chart-bar"></i> Ringkasan Data Sistem</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <canvas id="systemOverviewChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        </section>
+                <div class="col-md-5">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><i class="fa fa-chart-pie"></i> Distribusi Klien</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <canvas id="clientStatusChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title"><i class="fa fa-users-line"></i> Klien Terbaru</h3>
+                            <div class="box-tools">
+                                <div class="input-group input-group-sm" style="width: 200px;">
+                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Cari Klien...">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>Tanggal Daftar</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>183</td>
+                                        <td>Budi Santoso</td>
+                                        <td>budi.s@email.com</td>
+                                        <td>15 Jun 2025</td>
+                                        <td><span class="label label-success">Aktif</span></td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Lihat</a>
+                                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>219</td>
+                                        <td>Siti Aminah</td>
+                                        <td>14 Jun 2025</td>
+                                        <td><span class="label label-warning">Pending</span></td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Lihat</a>
+                                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>220</td>
+                                        <td>Agus Wiranto</td>
+                                        <td>agus.w@email.com</td>
+                                        <td>13 Jun 2025</td>
+                                        <td><span class="label label-info">Verifikasi</span></td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Lihat</a>
+                                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </section>
     </div>
 
     <div class="control-sidebar-bg"></div>
 </div>
 
-<!-- Script fragment dari backOffice -->
 <th:block th:replace="backOffice/fragment/script-fragment :: script-fragment"></th:block>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Tidak perlu lagi th:inline="javascript" jika semua data diambil dari data-attribute
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mengambil nilai dari data-attribute
+        var totalClients = parseInt(document.querySelector('[data-total-clients]').dataset.totalClients);
+        var totalAgents = parseInt(document.querySelector('[data-total-agents]').dataset.totalAgents);
+        var totalRentals = parseInt(document.querySelector('[data-total-rentals]').dataset.totalRentals);
+        var totalCars = parseInt(document.querySelector('[data-total-cars]').dataset.totalCars);
+
+        // Data untuk grafik status klien (masih menggunakan dummy karena tidak ada di controller Anda)
+        // IDEALNYA: Anda menambahkan activeClients dan pendingClients ke model di Controller
+        var activeClients = Math.floor(totalClients * 0.7); // Contoh: 70% aktif
+        var pendingClients = totalClients - activeClients;  // Sisanya pending
+
+        // Grafik Ringkasan Sistem (Bar Chart)
+        var ctxSystem = document.getElementById('systemOverviewChart').getContext('2d');
+        new Chart(ctxSystem, {
+            type: 'bar',
+            data: {
+                labels: ['Klien', 'Agen', 'Rental', 'Mobil'],
+                datasets: [{
+                    label: 'Jumlah Total',
+                    data: [totalClients, totalAgents, totalRentals, totalCars],
+                    backgroundColor: [
+                        'rgba(0, 192, 239, 0.8)', // Info Blue
+                        'rgba(0, 166, 90, 0.8)',  // Success Green
+                        'rgba(243, 156, 18, 0.8)',// Warning Yellow
+                        'rgba(221, 75, 57, 0.8)'  // Danger Red
+                    ],
+                    borderColor: [
+                        'rgba(0, 192, 239, 1)',
+                        'rgba(0, 166, 90, 1)',
+                        'rgba(243, 156, 18, 1)',
+                        'rgba(221, 75, 57, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0 // Pastikan sumbu Y menampilkan angka bulat
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false // Hilangkan grid vertikal
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                }
+            }
+        });
+
+        // Grafik Status Klien (Doughnut Chart)
+        var ctxClientStatus = document.getElementById('clientStatusChart').getContext('2d');
+        new Chart(ctxClientStatus, {
+            type: 'doughnut',
+            data: {
+                labels: ['Aktif', 'Pending'],
+                datasets: [{
+                    label: 'Jumlah Klien',
+                    data: [activeClients, pendingClients],
+                    backgroundColor: [
+                        '#28a745', // Hijau tua untuk Aktif
+                        '#ffc107'  // Kuning untuk Pending
+                    ],
+                    borderColor: [
+                        '#ffffff',
+                        '#ffffff'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right', // Legenda di kanan
+                        labels: {
+                            boxWidth: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                let label = tooltipItem.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += tooltipItem.raw;
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>

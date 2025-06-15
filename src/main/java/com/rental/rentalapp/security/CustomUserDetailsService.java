@@ -4,14 +4,12 @@ import com.rental.rentalapp.model.Agent;
 import com.rental.rentalapp.model.Client;
 import com.rental.rentalapp.service.AgentService;
 import com.rental.rentalapp.service.ClientService;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+// Hapus import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Optional;
 
 @Service("customUserDetailsService")
@@ -28,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         System.out.println("🔍 Attempting to load user by email: " + email);
-        
+
         // Coba cari di Client terlebih dahulu
         Optional<Client> clientOpt = clientService.findByEmail(email);
         if (clientOpt.isPresent()) {
@@ -36,11 +34,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             System.out.println("✅ Found client: " + client.getEmail());
             System.out.println("🔍 Client password from DB: " + client.getPassword());
             
-            return User.builder()
-                    .username(client.getEmail())
-                    .password(client.getPassword())
-                    .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_CLIENT")))
-                    .build();
+            // Mengembalikan instance UserPrincipal custom Anda dengan objek Client
+            return new UserPrincipal(client);
         }
 
         // Jika tidak ditemukan di Client, coba cari di Agent
@@ -50,11 +45,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             System.out.println("✅ Found agent: " + agent.getEmail());
             System.out.println("🔍 Agent password from DB: " + agent.getPassword());
             
-            return User.builder()
-                    .username(agent.getEmail())
-                    .password(agent.getPassword())
-                    .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_AGENT")))
-                    .build();
+            // Mengembalikan instance UserPrincipal custom Anda dengan objek Agent
+            return new UserPrincipal(agent);
         }
 
         System.out.println("❌ User not found with email: " + email);
