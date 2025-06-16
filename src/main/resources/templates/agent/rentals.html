@@ -88,9 +88,11 @@
                                             <!-- Tombol Aksi "Ubah" -->
                                             <a th:href="@{/agent/rentals/edit/{id}(id=${rental.id})}"  class="btn-edit">Ubah</a>
                                             <!-- Form untuk tombol Aksi "Hapus" -->
-                                            <form th:action="@{/agent/rentals/delete/{id}(id=${rental.id})}" method="post" style="display:inline-block;">
-                                                <input type="submit" class="btn-delete" value="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus klien ini?');">
-                                            </form>
+                      <form th:action="@{/agent/rentals/delete/{id}(id=${rental.id})}" th:method="post" style="display:inline-block;">
+    <button type="submit" class="btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus rental ini?');">Hapus</button>
+</form>
+
+
                                         </div>
                                     </td>
                                 </tr>

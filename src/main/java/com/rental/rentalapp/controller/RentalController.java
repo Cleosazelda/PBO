@@ -98,21 +98,22 @@ public class RentalController {
         return "redirect:/agent/rentals";
     }
 
-    @GetMapping("/rentals/delete/{id}")
-    public String deleteRental(@PathVariable Long id, RedirectAttributes redirectAttributes, Authentication authentication) {
-        if (authentication == null || !authentication.getAuthorities().stream()
-                .anyMatch(r -> r.getAuthority().equals("ROLE_AGENT"))) {
-            return "redirect:/login";
-        }
-        
-        try {
-            rentalService.deleteRental(id);
-            redirectAttributes.addFlashAttribute("success", "Rental berhasil dihapus!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Gagal menghapus rental: " + e.getMessage());
-        }
-        return "redirect:/agent/rentals";
+    @PostMapping("/rentals/delete/{id}")
+public String deleteRental(@PathVariable Long id, RedirectAttributes redirectAttributes, Authentication authentication) {
+    if (authentication == null || !authentication.getAuthorities().stream()
+            .anyMatch(r -> r.getAuthority().equals("ROLE_AGENT"))) {
+        return "redirect:/login";
     }
+    
+    try {
+        rentalService.deleteRental(id);
+        redirectAttributes.addFlashAttribute("success", "Rental berhasil dihapus!");
+    } catch (Exception e) {
+        redirectAttributes.addFlashAttribute("error", "Gagal menghapus rental: " + e.getMessage());
+    }
+    return "redirect:/agent/rentals";
+}
+
 
     @GetMapping("/rentals/view/{id}")
     public String viewRental(@PathVariable Long id, Model model, Authentication authentication) {

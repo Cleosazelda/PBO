@@ -19,7 +19,7 @@ public class AgentClientController {
     }
 
     // Tampilkan semua client
-    @GetMapping("/")
+    @GetMapping({"", "/"}) 
     public String listClients(Model model) {
         model.addAttribute("clients", clientService.getAllClients());
         return "agent/clients"; // Mengarah ke templates/agent/clients.html
@@ -44,16 +44,16 @@ public class AgentClientController {
     }
 
     // Simpan client (baru atau hasil edit)
-    @PostMapping("/save")
+    @PostMapping("/")
     public String saveClient(@ModelAttribute("client") Client client) {
         clientService.saveClient(client);
-        return "redirect:/agent/clients";
+        return "redirect:/agent/clients/";
     }
 
     // Hapus client
     @GetMapping("/delete/{nik}")
     public String deleteClient(@PathVariable("nik") String nik) {
         clientService.deleteClient(nik);
-        return "redirect:/agent/clients";
+        return "redirect:/agent/clients/";
     }
 }

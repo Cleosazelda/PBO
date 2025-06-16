@@ -85,11 +85,14 @@
                                     <td>
                                         <div class="action-buttons">
                                             <!-- Tombol Aksi "Ubah" -->
-                                            <a th:href="@{/agent/clients/edit/{nik}(nik=${client.nik})}" class="btn-edit">Ubah</a>
+                                            <a th:href="@{/agent/clients/edit/{nik}(nik=${client.nik})}" class="btn-edit" style="display:inline-block;">Ubah</a>
                                             <!-- Form untuk tombol Aksi "Hapus" -->
-                                            <form th:action="@{/agent/clients/delete/{nik}(nik=${client.nik})}" method="post" style="display:inline-block;">
-                                                <input type="submit" class="btn-delete" value="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus klien ini?');">
-                                            </form>
+                                            <a th:href="@{/agent/clients/delete/{nik}(nik=${client.nik})}" 
+                                                class="btn-delete" style="display:inline-block;"
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus klien ini?');">
+                                                Hapus
+                                                </a>
+
                                         </div>
                                     </td>
                                 </tr>

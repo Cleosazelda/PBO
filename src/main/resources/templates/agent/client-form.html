@@ -26,7 +26,7 @@
         
         <!-- Form Container -->
         <div class="form-container">
-            <form th:action="@{/agent/clients/save}" th:object="${client}" method="post" id="clientForm">
+            <form th:action="@{/agent/clients/}" th:object="${client}" method="post" id="clientForm">
 
                 <!-- NIK (Nomor Induk Kependudukan) -->
                 <div class="form-group">
@@ -90,7 +90,7 @@
                 
                 <!-- Tombol Aksi -->
                 <div class="btn-group">
-                    <a th:href="@{/agent/clients}" class="btn btn-secondary">Batal</a>
+                    <a th:href="@{/agent/clients/}" class="btn btn-secondary">Batal</a>
                     <button type="submit" class="btn btn-primary">Simpan Client</button>
                 </div>
             </form>

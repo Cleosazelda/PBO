@@ -43,8 +43,6 @@ public class ClientService {
 
     // Method untuk menyimpan/update client dari sisi Admin
     public void saveClient(Client client) {
-        // Jika password diisi (saat membuat baru atau reset), maka enkripsi
-        // Jika password kosong (saat edit), jangan ubah password lama
         if (client.getPassword() != null && !client.getPassword().isEmpty()) {
             client.setPassword(passwordEncoder.encode(client.getPassword()));
         } else {

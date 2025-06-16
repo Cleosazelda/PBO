@@ -80,12 +80,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="statusKetersediaan" class="form-label">Status Ketersediaan</label>
-                    <select class="form-control" th:field="*{statusKetersediaan}">
-                        <option th:each="s : ${T(com.rental.rentalapp.model.enums.CarStatus).values()}"
-                                th:value="${s}" th:text="${s.name()}"></option>
-                    </select>
-                </div>
+    <label for="statusKetersediaan" class="form-label">Status Ketersediaan</label>
+    <select class="form-control" th:field="*{statusKetersediaan}">
+        <option th:each="s : ${T(com.rental.rentalapp.model.enums.CarStatus).values()}"
+                th:value="${s.name()}"
+                th:text="${s.name()}">
+        </option>
+    </select>
+</div>
+
 
                 <div class="form-group">
                     <label for="fiturTambahan" class="form-label">Fitur Tambahan</label>
