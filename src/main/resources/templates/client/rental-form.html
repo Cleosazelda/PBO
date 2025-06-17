@@ -42,7 +42,8 @@
                     <div class="rental-card" style="background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
                         <h4 style="color: #333; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Detail Mobil</h4>
                         <div class="rental-car-details" style="display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed #eee;">
-                            <img th:src="@{'/images/' + ${car.gambar}}" th:alt="${car.merek + ' ' + car.model}" style="width: 120px; height: 80px; object-fit: cover; margin-right: 15px; border-radius: 4px;">
+                           <img th:if="${car.gambar}" th:src="@{${car.gambar}}" alt="Gambar Mobil"
+                                 style="max-width: 150px; height: auto; object-fit: cover;">
                             <div class="rental-car-info">
                                 <h5 th:text="${car.merek + ' ' + car.model}" style="margin: 0; color: #007bff;">Mobil Pilihan</h5>
                                 <p style="margin: 5px 0;">Plat Nomor: <strong th:text="${car.platNomor}">[Plat Nomor]</strong></p>

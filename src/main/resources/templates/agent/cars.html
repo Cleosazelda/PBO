@@ -72,7 +72,9 @@
                             <!-- Loop melalui daftar klien -->
                             <th:block th:each="car : ${cars}">
                         <td>
-                            <img th:if="${car.gambar}" th:src="@{${car.gambar}}" alt="Gambar Mobil">
+                            <img th:if="${car.gambar}" th:src="@{${car.gambar}}" alt="Gambar Mobil"
+                                 style="max-width: 150px; height: auto; object-fit: cover;">
+
                             <span th:unless="${car.gambar}">No Image</span>
                         </td>
                         <td th:text="${car.merek + ' ' + car.model}">Toyota Avanza</td>

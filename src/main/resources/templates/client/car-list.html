@@ -11,6 +11,112 @@
         justify-content: space-between;
         align-items: center;
     }
+
+    /* Biar kontainer mobil lebih rapi dan seragam tingginya */
+    .de-item-list {
+    display: flex;
+    gap: 30px; /* Jarak antar gambar, info, dan harga */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    min-height: 250px;
+    align-items: center; /* <--- ini yang paling penting */
+    background-color: #fff;
+}
+
+.d-img {
+    margin-bottom: 10px; /* Biar gambar ga nempel ke atas */
+}
+
+.d-img img {
+    width: 200px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+
+    /* Info mobil (kiri) */
+    .d-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    /* List detail mobil */
+    .d-atr-group {
+        margin-top: 10px;
+    }
+
+    .d-atr {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .d-atr li {
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+    }
+
+    /* Harga dan tombol (kanan) */
+    .d-price {
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .d-price strong {
+        font-size: 18px;
+        color: #333;
+        margin-top: 5px;
+    }
+
+    .btn-main {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 16px;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+
+    .btn-main:hover {
+        background-color: #1c60c2;
+    }
+    
+   .label {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 13px;
+    color: white;
+}
+
+.label-success { background-color: #28a745; }
+.label-danger { background-color: #dc3545; }
+.label-warning { background-color: #ffc107; }
+.label-default { background-color: #6c757d; }
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-label {
+  flex-shrink: 0;
+}
+
+
 </style>
 
 <div id="wrapper">
@@ -92,7 +198,8 @@
                             <div class="col-lg-12">
                                 <div class="de-item-list mb30">
                                     <div class="d-img">
-                                        <img th:src="@{'/images/' + ${car.gambar}}" class="img-fluid" th:alt="${car.merek + ' ' + car.model}" />
+                                       <img th:if="${car.gambar}" th:src="@{${car.gambar}}" alt="Gambar Mobil"
+                                 style="max-width: 150px; height: auto; object-fit: cover;">
                                     </div>
                                     <div class="d-info">
                                         <h4 th:text="${car.merek + ' ' + car.model}">Nama Mobil</h4>
@@ -102,7 +209,24 @@
                                                 <li><span>Bahan Bakar:</span> <span th:text="${car.jenisBahanBakar}">Bensin</span></li>
                                                 <li><span>Transmisi:</span> <span th:text="${car.jenisTransmisi}">Manual</span></li>
                                                 <li><span>Warna:</span> <span th:text="${car.warna}">Hitam</span></li>
-                                                <li><span>Status:</span> <span th:text="${car.statusKetersediaan.displayName}">Tersedia</span></li>
+<li class="status-row">
+  <span>Status:</span>
+  <div class="status-label">
+    <span th:if="${car.statusKetersediaan.name() == 'TERSEDIA'}"
+          class="label label-success"
+          th:text="${car.statusKetersediaan.displayName}">Tersedia</span>
+
+    <span th:if="${car.statusKetersediaan.name() == 'SEDANG_DISEWAKAN'}"
+          class="label label-danger"
+          th:text="${car.statusKetersediaan.displayName}">Sedang Disewakan</span>
+
+    <span th:if="${car.statusKetersediaan.name() == 'SEDANG_PERAWATAN'}"
+          class="label label-warning"
+          th:text="${car.statusKetersediaan.displayName}">Sedang Perawatan</span>
+  </div>
+</li>
+
+
                                             </ul>
                                         </div>
                                     </div>

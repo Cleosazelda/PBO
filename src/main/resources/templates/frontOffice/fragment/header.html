@@ -52,20 +52,21 @@
                         <li><a class="menu-item" th:href="@{/client/cars}">Mobil</a></li>
 
                         <!-- Jika belum login -->
-                        <li th:if="${session.clientNik == null and session.clientUsername == null}">
-                            <a class="menu-item" th:href="@{/login}">Login</a>
-                        </li>
-                        <li th:if="${session.clientNik == null and session.clientUsername == null}">
-                            <a class="menu-item" th:href="@{/register}">Register</a>
-                        </li>
+<li th:if="${not #authorization.expression('isAuthenticated()')}">
+    <a class="menu-item" th:href="@{/login}">Login</a>
+</li>
+<li th:if="${not #authorization.expression('isAuthenticated()')}">
+    <a class="menu-item" th:href="@{/register}">Register</a>
+</li>
 
-                        <!-- Jika sudah login -->
-                         <li th:if="${session.clientNik != null or session.clientUsername != null}">
-                            <a class="menu-item" th:href="@{/client/profile}">Profile</a>
-                        </li>
-                        <li th:if="${session.clientNik != null or session.clientUsername != null}">
-                            <a class="menu-item btn btn-danger text-white" th:href="@{/logout}" style="padding: 8px 12px; border-radius: 4px;">Logout</a>
-                        </li>
+<!-- Jika sudah login -->
+<li th:if="${#authorization.expression('isAuthenticated()')}">
+    <a class="menu-item" th:href="@{/client/profile}">Profile</a>
+</li>
+<li th:if="${#authorization.expression('isAuthenticated()')}">
+    <a class="menu-item btn btn-danger text-white" th:href="@{/logout}" style="padding: 8px 12px; border-radius: 4px;">Logout</a>
+</li>
+
                     </ul>
                 </div>
 
