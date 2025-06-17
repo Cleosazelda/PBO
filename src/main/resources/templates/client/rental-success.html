@@ -1,50 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="frontOffice/fragment/head-fragment :: head-fragment('Rentaly')">
-    <style>
-        .success-container {
-            text-align: center;
-            padding: 50px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 600px;
-            margin: 50px auto;
-        }
-        .success-container h3 {
-            color: #28a745; /* Warna hijau untuk sukses */
-            margin-bottom: 20px;
-        }
-        .success-container p {
-            font-size: 1.1em;
-            color: #555;
-            margin-bottom: 25px;
-        }
-        .success-container .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .success-container .btn-primary {
-            background-color: #007bff;
-            color: white;
-            border: 1px solid #007bff;
-        }
-        .success-container .btn-primary:hover {
-            background-color: #0056b3;
-        }
-        .success-container .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-            border: 1px solid #6c757d;
-        }
-        .success-container .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-    </style>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    .success-section {
+        width: 100%;
+        padding: 50px 0;
+        background-color: #f9f9f9;
+        display: flex;
+        justify-content: center;
+    }
+
+    .success-container {
+        text-align: center;
+        padding: 40px 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        max-width: 700px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .success-container h3 {
+        color: #28a745;
+        margin-bottom: 20px;
+    }
+
+    .success-container p {
+        font-size: 1.1em;
+        color: #555;
+        margin-bottom: 25px;
+    }
+
+    .btn-primary {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #218838;
+    }
+</style>
+
     </head>
 
 <body>
@@ -56,7 +64,8 @@
     <th:block th:replace="frontOffice/fragment/header :: header"></th:block>
 
     <!-- Dynamic Section -->
-    <div class="container mt-5 text-center">
+<div class="mt-5 text-center" style="width: 100%; padding: 0;">
+
     <title th:text="${title}"></title>
 <div layout:fragment="content">
     <section id="subheader" class="dark no-top no-bottom" data-bgimage="url(/images/background/bg-header.html)">
